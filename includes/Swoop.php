@@ -17,8 +17,7 @@ class Swoop {
     $this->redirectUrl  = $redirectUrl;
   }
 
-  public function loginUrl($additionalParams = array()) {
-    print_r($additionalParams);
+  public function loginUrl($additionalParams = array()) {    
     $loginUrl = SWOOP_URL.SWOOP_AUTH_ENDPOINT .
     '?client_id='    . $this->clientId.
     '&redirect_uri=' . $this->redirectUrl .
