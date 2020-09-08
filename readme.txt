@@ -5,7 +5,7 @@ Author: Swoop
 Author URI: https://swoopnow.com/
 Requires at least: 4.6
 Tested up to: 5.4.1
-Stable tag: 1.0.8
+Stable tag: 1.0.9
 Requires PHP: 5.2.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
