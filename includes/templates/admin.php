@@ -1,7 +1,7 @@
 <div class="wrapper">
   <div class="d-flex flex-column flex-md-row mb-3 top-nav">
     <div class="logo-tagline">
-      <img class="logo" src="<?php echo plugin_dir_url( __DIR__ ) ?>/includes/assets/images/Swoop-logo-green.svg">
+      <img class="logo" src="<?php echo plugin_dir_url( __DIR__ ) ?>/assets/images/Swoop-logo-green.svg">
       <div class="tagline">Password-Free Authentication</div>
     </div>
     <nav class="my-2 my-md-2 mr-md-3">
@@ -27,7 +27,7 @@
 
           <div class='row row-bottom-margin'>
             <div class='column icon'>
-              <img class="feature-icon" src="<?php echo plugin_dir_url( __DIR__ ) ?>/includes/assets/images/magic-link.svg">
+              <img class="feature-icon" src="<?php echo plugin_dir_url( __DIR__ ) ?>/assets/images/magic-link.svg">
             </div>
             <div class='column copy'>
               <span class="feature-header">Magic Link™</span>
@@ -37,7 +37,7 @@
 
           <div class='row row-bottom-margin'>
             <div class='column icon'>
-              <img class="feature-icon" src="<?php echo plugin_dir_url( __DIR__ ) ?>/includes/assets/images/magic-message-sparkles.svg">
+              <img class="feature-icon" src="<?php echo plugin_dir_url( __DIR__ ) ?>/assets/images/magic-message-sparkles.svg">
             </div>
             <div class='column copy'>
               <span class="feature-header">Magic Message™</span>
@@ -47,7 +47,7 @@
 
           <div class='row row-bottom-margin'>
             <div class='column icon'>
-              <img class="feature-icon" src="<?php echo plugin_dir_url( __DIR__ ) ?>/includes/assets/images/quick-authorization.svg">
+              <img class="feature-icon" src="<?php echo plugin_dir_url( __DIR__ ) ?>/assets/images/quick-authorization.svg">
             </div>
             <div class='column copy'>
               <span class="feature-header">1-Click Connect</span>

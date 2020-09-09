@@ -95,7 +95,7 @@ class SwoopOptions
         ?>
         <script>
           jQuery(document).ready(() => {
-            window.state = {};            
+            window.state = {};
             window.state.site = {
               siteRoot: '<?php echo site_url(); ?>',
               title: '<?php echo addslashes($blogname); ?>',
@@ -133,7 +133,7 @@ class SwoopOptions
         </script>
 
       <?php
-        include('admin_template.php');
+        include 'templates/admin.php';
     }
 
     public function swoop_connected(){

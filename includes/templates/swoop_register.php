@@ -4,10 +4,6 @@
 		<input type="text" name="user_login" id="user_login" class="input" value="" size="20" autocapitalize="off" />
 	</p>
 	<p>
-		<label for="user_email">Email</label>
-		<input type="email" name="user_email" id="user_email" class="input" value="" size="25" />
-	</p>
-	<p>
 		<label for="user_email">First Name</label>
 		<input type="text" name="first_name" id="first_name" class="input" value="" size="25" />
 	</p>

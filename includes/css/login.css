@@ -5,8 +5,13 @@
 #login #nav,
 .woocommerce-checkout .woocommerce-info,
 .woocommerce-account .woocommerce h2,
-.woocommerce-account .woocommerce form.login {
+.woocommerce-account .woocommerce form.login,
+.woocommerce-account .woocommerce form.register {
     display: none;
+}
+
+.woocommerce-account .woocommerce h2.swoop {
+  display: block;
 }
 
 .a0-show-core-login #registerform,

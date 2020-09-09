@@ -140,7 +140,4 @@ class SwoopCore {
     delete_option(SWOOP_OPTIONS_KEY);
   }
 
-  function enqueue_swoop_js($hook) {
-    wp_enqueue_script('swoop_js', plugin_dir_url(__FILE__) . 'js/swoop.js',10);
-  }
 }

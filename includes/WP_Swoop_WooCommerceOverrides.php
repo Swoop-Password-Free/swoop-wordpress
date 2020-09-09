@@ -36,8 +36,19 @@ class WP_Swoop_WooCommerceOverrides {
 	private function render_login_form( $redirect_page ) {
     // Redirecting to WordPress login page.
     $redirect_url = get_permalink( wc_get_page_id( $redirect_page ) );
-    $login_url    = wp_login_url( $redirect_url );
-    printf( "<a class='button' href='%s'>%s</a>", $login_url, __( 'Login', 'wp-Swoop' ) );
+    $loginUrl    = wp_login_url( $redirect_url );
+		$title = 'Login';
+
+		if($redirect_page == 'checkout') {
+			ob_start();
+			include 'templates/swoop_login.php';
+			echo ob_get_clean();
+			return;
+		}
+
+		ob_start();
+		include 'templates/woocommerce_my_account.php';
+		echo ob_get_clean();
 	}
 
 	/**
@@ -86,9 +97,9 @@ add_filter( 'woocommerce_before_customer_login_form', 'wp_swoop_filter_woocommer
 
 if(is_woocommerce_activated()) {
   function enqueue_swoop_css() {
-    wp_enqueue_style( 'swoop-login',  plugin_dir_url(__FILE__) . 'css/login.css',10 );
+    wp_enqueue_style( 'swoop-login',  plugin_dir_url(__FILE__) . 'css/login.css',1000, 1.2 );
   }
-  add_action('wp_enqueue_scripts', 'enqueue_swoop_css', 10);
+  add_action('wp_enqueue_scripts', 'enqueue_swoop_css', 1000);
 }
 
 
