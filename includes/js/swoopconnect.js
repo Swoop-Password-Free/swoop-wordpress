@@ -12,7 +12,7 @@ class SwoopConnect {
         self.iframe = null;
       }
 
-      var propertyObj = btoa(JSON.stringify(propertyInfo));      
+      var propertyObj = btoa(JSON.stringify(propertyInfo));
       self.iframe = document.createElement('iframe');
       self.iframe.setAttribute('src', this.iframeSource + '?state=' + propertyObj);
       self.iframe.setAttribute('id', 'swoop_frame');
@@ -24,11 +24,15 @@ class SwoopConnect {
       // Listen to message from child window
       let that = self;
       self.bindEvent(window, 'message', function(e) {
-        that.iframe.parentNode.removeChild(that.iframe);
-        that.iframe = null;
-        let property = JSON.parse(e.data);
-        that.unbindEvent(window,'message',this);
-        resolve(property);
+        try {
+          var property = JSON.parse(e.data);
+          that.iframe.parentNode.removeChild(that.iframe);
+          that.iframe = null;
+          that.unbindEvent(window,'message',this);
+          resolve(property);
+        } catch(e) {
+          console.log('Ignoring window event');
+        }
       });
     });
   }
