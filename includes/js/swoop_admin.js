@@ -8,14 +8,14 @@ function connect() {
   var site = window.state.site;
 
   swoop = new SwoopConnect("https://connect.swoop.email/auth/swoop");
-  // swoop = new SwoopConnect("http://localhost:3000/auth/swoop");
+  // swoop = new SwoopConnect("https://brandon_swoop.ngrok.io/auth/swoop");
   window.swoop = swoop;
   swoop.iFrame(document.getElementById("swoop"), {
       name: site.title,
       url: site.url,
       redirect_uri: site.redirect_uri
     })
-    .then(obj => {      
+    .then(obj => {
       var property = obj.property || obj;
       var organization = obj.organization;
 
