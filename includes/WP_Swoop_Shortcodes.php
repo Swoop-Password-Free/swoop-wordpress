@@ -11,6 +11,13 @@
 
     public function registrationForm($atts, $content = "") {
       ob_start();
+      $registerUrl = wp_registration_url();
+      $shortCodeAttributes = shortcode_atts( array(
+    		'title' => 'Login',
+        'target' => admin_url()
+    	), $atts );
+      $redirectTo = $shortCodeAttributes['target'];
+      $logoutUrl = wp_logout_url();
       include 'templates/swoop_register.php';
       return ob_get_clean();
     }
@@ -23,10 +30,13 @@
 
     public function loginForm($atts, $content = "") {
       $shortCodeAttributes = shortcode_atts( array(
-    		'title' => 'Login'
+    		'title' => 'Login',
+        'target' => admin_url()
     	), $atts );
 
+      $redirectTo = $shortCodeAttributes['target'];
       $loginUrl = $this->swoop->loginUrl();
+      $logoutUrl = wp_logout_url();
       $title = $shortCodeAttributes['title'];
 
       ob_start();
