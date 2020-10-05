@@ -11,7 +11,8 @@
 
     public function registrationForm($atts, $content = "") {
       ob_start();
-      $registerUrl = wp_registration_url();
+      $registerUrl = add_query_arg( array("wpe-login" => true), wp_registration_url());
+
       $shortCodeAttributes = shortcode_atts( array(
     		'title' => 'Login',
         'target' => admin_url()

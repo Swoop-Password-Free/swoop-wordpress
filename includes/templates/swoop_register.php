@@ -1,4 +1,4 @@
-<form name="" id="" action="<?php echo $registerUrl; ?>" method="post" novalidate="novalidate">
+<form name="registerform" id="registerform" action="<?php echo $registerUrl; ?>" method="post" novalidate="novalidate">
 	<p>
 		<label for="user_login">Username</label>
 		<input type="text" name="user_login" id="user_login" class="input" value="" size="20" autocapitalize="off" />
