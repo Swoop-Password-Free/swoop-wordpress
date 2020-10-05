@@ -107,7 +107,7 @@ class SwoopCore {
     $redirect_to = isset($_GET['redirect_to']) ? $_GET['redirect_to'] : null;
 
     // Allows the user to get back to wp login
-    if($action === 'wp-login') {
+    if($action === 'wp-login' || isset($_POST)) {
       return;
     }
 
