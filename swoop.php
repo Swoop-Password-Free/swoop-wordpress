@@ -2,7 +2,7 @@
 /*
 Plugin Name: Swoop: Password-Free Authentication
 Description: The Swoop WordPress plugin is a simple and secure password-free authentication service. To get started, go to your <a href='./options-general.php?page=swoop'>Swoop Settings page</a> to connect the Swoop service to your property.
-Version: 1.0.12
+Version: 1.0.13
 Author: Swoop
 Author URI: https://swoopnow.com
 License: GPL3
@@ -29,7 +29,13 @@ along with Foobar.  If not, see <http://www.gnu.org/licenses/>.
 include_once( plugin_dir_path( __FILE__ ) . '/includes/swoop_core.php' );
 include_once( plugin_dir_path( __FILE__ ) . '/includes/swoop_options.php' );
 
-$swoop = new SwoopCore(__FILE__);
+$wp_swoop = new SwoopCore(__FILE__);
+
+/*
+ * Theme Functions
+ */
+
+include_once( plugin_dir_path( __FILE__ ) . '/includes/swoop_theme_functions.php' );
 
 /*
  * WooCommerce hooks
