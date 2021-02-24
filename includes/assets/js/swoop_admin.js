@@ -32,6 +32,7 @@ function connect() {
 }
 
 function swoop_connected_ajax(siteRoot, client_id, client_secret, property_id, property_name, organization_id, organization_name) {
+
   jQuery.ajax({
     method: "POST",
     data: {
@@ -45,6 +46,8 @@ function swoop_connected_ajax(siteRoot, client_id, client_secret, property_id, p
     },
     url: siteRoot + "/wp-admin/admin-ajax.php",
     success: function(result) {
+      window.location.reload();
+      console.log(result)
       var r = JSON.parse(result)
       window.state.swoop = {
         ...window.state.swoop,

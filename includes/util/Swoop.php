@@ -1,5 +1,5 @@
 <?php
-require_once('config.php');
+include_once( plugin_dir_path( __FILE__ ) . '../config.php' );
 class Swoop {
 
   private $clientId;
@@ -17,7 +17,7 @@ class Swoop {
     $this->redirectUrl  = $redirectUrl;
   }
 
-  public function loginUrl($additionalParams = array()) {    
+  public function loginUrl($additionalParams = array()) {
     $loginUrl = SWOOP_URL.SWOOP_AUTH_ENDPOINT .
     '?client_id='    . $this->clientId.
     '&redirect_uri=' . $this->redirectUrl .

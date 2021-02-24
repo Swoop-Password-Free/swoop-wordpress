@@ -41,13 +41,13 @@ class WP_Swoop_WooCommerceOverrides {
 
 		if($redirect_page == 'checkout') {
 			ob_start();
-			include 'templates/swoop_login.php';
+			include 'views/swoop_login.php';
 			echo ob_get_clean();
 			return;
 		}
 
 		ob_start();
-		include 'templates/woocommerce_my_account.php';
+		include 'views/woocommerce_my_account.php';
 		echo ob_get_clean();
 	}
 
@@ -75,7 +75,6 @@ class WP_Swoop_WooCommerceOverrides {
 }
 
 // functions for override
-include_once( plugin_dir_path( __FILE__ ) . 'functions.php' );
 function wp_swoop_filter_woocommerce_checkout_login_message( $html ) {
 	$wp_swoop_woocommerce = new WP_Swoop_WooCommerceOverrides( );
 	return $wp_swoop_woocommerce->override_woocommerce_checkout_login_form( $html );
@@ -97,7 +96,7 @@ add_filter( 'woocommerce_before_customer_login_form', 'wp_swoop_filter_woocommer
 
 if(is_woocommerce_activated()) {
   function enqueue_swoop_css() {
-    wp_enqueue_style( 'swoop-login',  plugin_dir_url(__FILE__) . 'css/login.css',1000, 1.2 );
+    wp_enqueue_style( 'swoop-login',  plugin_dir_url(__FILE__) . 'assets/css/login.css',1000, 1.2 );
   }
   add_action('wp_enqueue_scripts', 'enqueue_swoop_css', 1000);
 }

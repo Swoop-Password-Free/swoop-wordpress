@@ -3,14 +3,13 @@ define("SWOOP_URL","https://auth.swoop.email");
 define("SWOOP_AUTH_ENDPOINT","/oauth2/authorize");
 define("SWOOP_TOKEN_ENDPOINT","/oauth2/token");
 
-
 define("SWOOP_PLUGIN_NAMESPACE",'swoop/v1');
 define("SWOOP_PLUGIN_CALLBACK",'callback');
 define("SWOOP_PLUGIN_SLUG",'swoop');
 
 // Options
-define("SWOOP_OPTIONS_MENU_NAME",'Swoop: Password-Free Authentication');
-define("SWOOP_OPTIONS_MENU_TITLE",'Swoop: Password-Free Authentication');
+define("SWOOP_OPTIONS_MENU_NAME",'Swoop');
+define("SWOOP_OPTIONS_MENU_TITLE",'Password-Free');
 define("SWOOP_OPTIONS_KEY", "swoop_options");
 define("SWOOP_OPTIONS_GROUP",'swoop_options_group');
 
@@ -24,4 +23,12 @@ define("SWOOP_PROPERTY_ID_KEY", "swoop_property_id");
 define("SWOOP_WP_ADMIN_KEY", "swoop_wp_admin");
 define("SWOOP_WP_ADMIN_EMAIL_KEY", "swoop_wp_admin_email");
 define("SWOOP_CONNECTED_DATE_KEY", "swoop_wp_connected_date");
+
+// Protect
+define("SWOOP_PROTECT_PLUGIN_SLUG",'swoop-protect');
+define("SWOOP_PROTECT_MENU_NAME",'Page Protection');
+define("SWOOP_PROTECT_MENU_TITLE",'Swoop: Password-Free Page Protection');
+define("SWOOP_PROTECT_POST_META_KEY", 'swoop_protected');
+define("SWOOP_PROTECT_REDIRECT_PAGE_ID_KEY", 'swoop_protect_redirect_page_id');
+define("SWOOP_PROTECT_NONCE_KEY", 'swoop_protect_nonce');
 ?>

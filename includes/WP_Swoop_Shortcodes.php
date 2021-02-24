@@ -19,7 +19,7 @@
     	), $atts );
       $redirectTo = $shortCodeAttributes['target'];
       $logoutUrl = wp_logout_url();
-      include 'templates/swoop_register.php';
+      include 'views/swoop_register.php';
       return ob_get_clean();
     }
 
@@ -36,12 +36,15 @@
     	), $atts );
 
       $redirectTo = $shortCodeAttributes['target'];
+      if($_GET['redirect_to']) {
+        $redirectTo = $_GET['redirect_to'];
+      }
       $loginUrl = $this->swoop->loginUrl();
       $logoutUrl = wp_logout_url();
       $title = $shortCodeAttributes['title'];
 
       ob_start();
-      include 'templates/swoop_login.php';
+      include 'views/swoop_login.php';
       return ob_get_clean();
     }
   }

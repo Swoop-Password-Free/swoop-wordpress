@@ -1,67 +1,31 @@
 <?php
-include_once("config.php");
-include_once("media_includes.php");
+  include_once( plugin_dir_path( __FILE__ ) . '../../config.php' );
 
-class SwoopOptions
-{
-    /**
-     * Holds the values to be used in the fields callbacks
-     */
+  class WP_Swoop_Admin_Password_Free {
     private $options;
-    private $swoop_page_slug = SWOOP_PLUGIN_SLUG;
 
-    /**
-     * Start up
-     */
-    public function __construct()
-    {
-        add_action( 'admin_menu', array( $this, 'add_plugin_page' ) );
-        add_action( 'admin_init', array( $this, 'page_init' ) );
-        add_action( 'admin_init', array( $this, 'myPlugin_admin_scripts' ));
+    public function __construct($options) {
+      $this->options = $options;
+      add_action( 'admin_init', array( $this, 'page_init' ) );
+      add_action( 'admin_init', array( $this, 'myPlugin_admin_scripts' ));
+      // Ajax hooks
+      add_action('wp_ajax_swoop_connected', array($this, 'swoop_connected'));
+      add_action('wp_ajax_nopriv_swoop_connected', array($this, 'swoop_connected'));
+      add_action('wp_ajax_swoop_disconnect', array($this, 'swoop_disconnect'));
+      add_action('wp_ajax_nopriv_swoop_disconnect', array($this, 'swoop_disconnect'));
 
-        // Ajax hooks
-        add_action('wp_ajax_swoop_connected', array($this, 'swoop_connected'));
-        add_action('wp_ajax_nopriv_swoop_connected', array($this, 'swoop_connected'));
-        add_action('wp_ajax_swoop_disconnect', array($this, 'swoop_disconnect'));
-        add_action('wp_ajax_nopriv_swoop_disconnect', array($this, 'swoop_disconnect'));
+      if ( is_admin() ){ // for Admin Dashboard Only
+         // Embed the Script on our Plugin's Option Page Only
+         if ( isset($_GET['page']) && $_GET['page'] == 'swoop' ) {
+            add_action('admin_enqueue_scripts', array($this,'enqueue_swoopconnect'),10);
+            add_action('admin_footer_text', array( $this, 'swoop_admin_footer' ));
+          }
+      }
 
-        if ( is_admin() ){ // for Admin Dashboard Only
-           // Embed the Script on our Plugin's Option Page Only
-           if ( isset($_GET['page']) && $_GET['page'] == 'swoop' ) {
-              add_action('admin_enqueue_scripts', 'enqueue_swoopconnect',10);
-              add_action('admin_footer_text', array( $this, 'swoop_admin_footer' ));
-            }
-        }
     }
 
-    /**
-     * Add options page
-     */
-    public function add_plugin_page()
-    {
-        // This page will be under "Settings"
-        add_options_page(
-            SWOOP_OPTIONS_MENU_TITLE,
-            SWOOP_OPTIONS_MENU_NAME,
-            'manage_options',
-            $this->swoop_page_slug,
-            array( $this, 'create_admin_page' )
-        );
-    }
-
-    /**
-     * Options page callback
-     */
-    public function create_admin_page()
-    {
-        // Set class property
-        $this->options = get_option( SWOOP_OPTIONS_KEY );
-
-        ?>
-
-        <?php $this->init_admin_ui(); ?>
-
-        <?php
+    public function create() {
+      $this->init_admin_ui();
     }
 
     function myPlugin_admin_scripts() {
@@ -104,7 +68,7 @@ class SwoopOptions
             }
 
             window.state.swoop = {};
-            window.state.swoop.pluginRoot = '<?php echo plugin_dir_url( __DIR__ ); ?>';
+            window.state.swoop.pluginRoot = '<?php echo plugin_dir_url( __DIR__ ) . '../../'; ?>';
             window.state.swoop.siteRoot = '<?php echo site_url(); ?>';
 
             <?php if(isset($this->options[SWOOP_CLIENT_ID_KEY])) { ?>
@@ -133,7 +97,7 @@ class SwoopOptions
         </script>
 
       <?php
-        include 'templates/admin.php';
+        include ( plugin_dir_path( __FILE__ ) . '../views/password-free.php' );
     }
 
     public function swoop_connected(){
@@ -149,7 +113,6 @@ class SwoopOptions
       $options[SWOOP_WP_ADMIN_EMAIL_KEY] = $current_user->user_email;
       $options[SWOOP_CONNECTED_DATE_KEY] = date("F j, Y");
       update_option( SWOOP_OPTIONS_KEY, $options);
-      echo json_encode($options);
       exit();
     }
 
@@ -160,14 +123,19 @@ class SwoopOptions
       exit();
     }
 
-    function swoop_admin_footer() {
+    public function swoop_admin_footer() {
         echo '
         <p id="footer-left" class="alignleft">Please rate Swoop <a href="https://wordpress.org/support/plugin/swoop-password-free-authentication/reviews/?filter=5#new-post"/><span class="gold">★★★★★</span> on WordPress.org</a> to help us spread the word. Thank you from the Swoop team!</p>
         ';
     }
 
-}
+    public function enqueue_swoopconnect() {
+      wp_enqueue_script('swoopconnect_js', plugin_dir_url(__FILE__) . '../../assets/js/swoopconnect.js',10);
+      wp_enqueue_script('swoop_admin_js', plugin_dir_url(__FILE__) . '../../assets/js/swoop_admin.js',10,1.3);
+      wp_enqueue_style('bootstrap','https://getbootstrap.com/docs/4.1/dist/css/bootstrap.min.css', 1);
+      wp_enqueue_style('swoopconnect_css', plugin_dir_url(__FILE__) . '../../assets/css/swoop-wordpress-admin.css',20);
+      wp_enqueue_style('google_font', 'https://fonts.googleapis.com/css2?family=Lato&family=Rubik:wght@700&display=swap', 3);
 
-if( is_admin() )
-    $swoop_for_wordress_settings_ = new SwoopOptions();
+    }
+  }
 ?>
