@@ -7,7 +7,7 @@
 
             <div class="options">
                 <p>
-                    <label>What page do you want to show to unauthorized users?</label>
+                    <label>Where should we send non-authorized users when they attempt to access a protected page?</label>
                     <br />
                     <select name='<?php echo SWOOP_PROTECT_REDIRECT_PAGE_ID_KEY; ?>'>
                       <?php foreach($pages as $page) { ?>

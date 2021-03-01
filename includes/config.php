@@ -9,7 +9,7 @@ define("SWOOP_PLUGIN_SLUG",'swoop');
 
 // Options
 define("SWOOP_OPTIONS_MENU_NAME",'Swoop');
-define("SWOOP_OPTIONS_MENU_TITLE",'Password-Free');
+define("SWOOP_OPTIONS_MENU_TITLE",'Password-Free Login');
 define("SWOOP_OPTIONS_KEY", "swoop_options");
 define("SWOOP_OPTIONS_GROUP",'swoop_options_group');
 
