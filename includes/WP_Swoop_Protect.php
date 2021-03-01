@@ -11,7 +11,9 @@
       add_action( 'save_post', array($this, 'save_post_data') );
       add_filter( 'template_redirect', array($this,'swoop_protect_content'), 100000 );
       add_action('pre_get_posts', array($this,'swoop_exclude_from_everywhere'));
-      add_filter( 'get_pages', array($this,'filter_wp_list_pages'), 10, 3 );
+      if(!is_admin()) {
+        add_filter( 'get_pages', array($this,'filter_wp_list_pages'), 10, 3 );
+      }
 
       $this->options = get_option( SWOOP_OPTIONS_KEY );
     }
