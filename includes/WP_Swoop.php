@@ -11,7 +11,7 @@ class WP_Swoop {
 
   public function __construct($file) {
 
-    $this->options = get_option( SWOOP_OPTIONS_KEY );
+    $this->options = get_option( SWOOP_OPTIONS_KEY );    
     register_uninstall_hook($file, array('WP_Swoop', 'uninstall'));
 
     add_action( 'rest_api_init', function () {

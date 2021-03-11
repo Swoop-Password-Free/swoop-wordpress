@@ -12,14 +12,59 @@
     </nav>
   </div>
   <main role="main" class="container">
-    <h1>Welcome to a future free of passwords.</h1>
 
     <div class="swoop-wordpress-admin">
 
       <div class="row">
         <div class="col-md-12 col-lg-8">
           <div class="iframe-holder" id="swoop">
+            <div class="row col-lg-12 welcome-screen">
+              <h2>Welcome to a future free of passwords.</h2>
+              <!-- Start Form -->
+              <form method="post" action="<?php echo esc_html( admin_url( 'admin-post.php' ) ); ?>">
+                    <table class="form-table" role="presentation">
+                    <tr>
+                      <th scope="row"><span for="swoop_client_id">Swoop Client ID</span></th>
+                      <td><input name="swoop_client_id" type="text" id="swoop_client_id" value="<?php echo $options[SWOOP_CLIENT_ID_KEY]; ?>" class="regular-text" /></td>
+                    </tr>
 
+                    <tr>
+                      <th scope="row"><span for="swoop_client_secret">Swoop Client Secret</span></th>
+                      <td><input name="swoop_client_secret" type="text" id="swoop_client_secret" value="<?php echo $options[SWOOP_CLIENT_SECRET_KEY]; ?>" class="regular-text" /></td>
+                    </tr>
+
+                    </table>
+
+
+                  <?php
+                      wp_nonce_field( SWOOP_PROTECT_NONCE_KEY . '-save', SWOOP_PROTECT_NONCE_KEY );
+                      submit_button();
+                  ?>
+
+              </form>
+              <!-- End Form -->
+
+            </div>
+            <div class="user-copy">
+              <h4>Setup Instructions</h4>
+              <ol>
+                <li>Sign up for Free at <a target="_blank" href="https://swoopnow.com/pricing/">swoopnow.com</a></li>
+                <li>Sign in to your <a target="_blank" href="https://dashboard.swoop.email">Swoop Dashboard</a></li>
+                <li>
+                  Click Add Property
+                  <ol type="a">
+                    <li>Add your Site Name: The name displayed to your users during authorization to your site (<code><?php echo get_bloginfo('name'); ?></code>).</li>
+                    <li>Add your Homepage URL: Home page of your website. (<code><?php echo get_bloginfo('url'); ?></code>)</li>
+                    <li>Set the Redirect URL to be <code><?php echo site_url(  "wp-json/" . SWOOP_PLUGIN_NAMESPACE . "/" . SWOOP_PLUGIN_CALLBACK ); ?></code></li>
+                    <li>Click Save.</li>
+                  </ol>
+                </li>
+
+                <li>In the OAuth2 setttings, copy the Client ID and paste it in the input field above.</li>
+                <li>In the OAuth2 setttings, copy the Secret and paste it in the input field above.</li>
+                <li>Click <strong>Save Changes</strong> and enter a password-free paradise</li>
+              </ol>
+            </div>
           </div>
         </div>
 
