@@ -78,7 +78,7 @@
       $post = get_post();
       $protectedPostURL = get_permalink($post->ID);
       $protected = get_post_meta( $post->ID, 'swoop_protected', false );
-      $protected = is_array($protected) ? $protected[0] : false;
+      $protected = is_array($protected) && count($protected) > 0 ? $protected[0] : false;
 
       // Check if we're inside the main loop in a single Post.
       if ( is_singular() && is_main_query() && $protected && !is_user_logged_in() ) {
@@ -96,8 +96,8 @@
     }
 
     function swoop_exclude_from_everywhere($query) {
-      $protected_posts = $this->options['protected_posts'] ? $this->options['protected_posts'] : array();
-      if($this->options[SWOOP_PROTECT_REDIRECT_PAGE_ID_KEY]) {
+      $protected_posts = array_key_exists('protected_posts',$this->options) ? $this->options['protected_posts'] : array();
+      if(array_key_exists(SWOOP_PROTECT_REDIRECT_PAGE_ID_KEY, $this->options)) {
         array_push($protected_posts, $this->options[SWOOP_PROTECT_REDIRECT_PAGE_ID_KEY]);
       }
 
@@ -108,7 +108,7 @@
 
     function filter_wp_list_pages( $pages, $arguments ) {
         // make filter magic happen here...
-        if(!$this->options[SWOOP_PROTECT_REDIRECT_PAGE_ID_KEY]) {
+        if(!array_key_exists(SWOOP_PROTECT_REDIRECT_PAGE_ID_KEY,$this->options)) {
           return $pages;
         }
 

@@ -25,12 +25,12 @@
                     <table class="form-table" role="presentation">
                     <tr>
                       <th scope="row"><span for="swoop_client_id">Swoop Client ID</span></th>
-                      <td><input name="swoop_client_id" type="text" id="swoop_client_id" value="<?php echo $options[SWOOP_CLIENT_ID_KEY]; ?>" class="regular-text" /></td>
+                      <td><input name="swoop_client_id" type="text" id="swoop_client_id" value="<?php echo $client_id; ?>" class="regular-text" /></td>
                     </tr>
 
                     <tr>
                       <th scope="row"><span for="swoop_client_secret">Swoop Client Secret</span></th>
-                      <td><input name="swoop_client_secret" type="text" id="swoop_client_secret" value="<?php echo $options[SWOOP_CLIENT_SECRET_KEY]; ?>" class="regular-text" /></td>
+                      <td><input name="swoop_client_secret" type="text" id="swoop_client_secret" value="<?php echo $client_secret; ?>" class="regular-text" /></td>
                     </tr>
 
                     </table>

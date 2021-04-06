@@ -39,32 +39,11 @@
      */
     public function init_admin_ui()
     {
-      $options = $this->options;
+      $options = get_option( SWOOP_OPTIONS_KEY, array() );
+      $client_id = array_key_exists(SWOOP_CLIENT_ID_KEY, $options) ? $options[SWOOP_CLIENT_ID_KEY] : "";
+      $client_secret = array_key_exists(SWOOP_CLIENT_SECRET_KEY, $options) ? $options[SWOOP_CLIENT_SECRET_KEY] : "";
       include ( plugin_dir_path( __FILE__ ) . '../views/password-free.php' );
     }
-
-    // public function swoop_connected(){
-    //   $current_user = wp_get_current_user();
-    //   $options = get_option( SWOOP_OPTIONS_KEY );
-    //   $options[SWOOP_CLIENT_ID_KEY] = $_POST['client_id'];
-    //   $options[SWOOP_CLIENT_SECRET_KEY] = $_POST['client_secret'];
-    //   $options[SWOOP_ORGANIZATION_NAME_KEY] = $_POST['organization_name'];
-    //   $options[SWOOP_ORGANIZATION_ID_KEY] = $_POST['organization_id'];
-    //   $options[SWOOP_PROPERTY_NAME_KEY] = $_POST['property_name'];
-    //   $options[SWOOP_PROPERTY_ID_KEY] = $_POST['property_id'];
-    //   $options[SWOOP_WP_ADMIN_KEY] = $current_user->user_login;
-    //   $options[SWOOP_WP_ADMIN_EMAIL_KEY] = $current_user->user_email;
-    //   $options[SWOOP_CONNECTED_DATE_KEY] = date("F j, Y");
-    //   update_option( SWOOP_OPTIONS_KEY, $options);
-    //   exit();
-    // }
-    //
-    // public function swoop_disconnect() {
-    //   $options = get_option( SWOOP_OPTIONS_KEY );
-    //   $options = [];
-    //   update_option( SWOOP_OPTIONS_KEY, $options);
-    //   exit();
-    // }
 
     public function swoop_admin_footer() {
         echo '

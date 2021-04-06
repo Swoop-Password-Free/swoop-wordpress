@@ -1,0 +1,34 @@
+#registerform,
+#loginform,
+#lostpasswordform,
+#login_error,
+#login #nav,
+.woocommerce-checkout .woocommerce-info,
+.woocommerce-account .woocommerce h2,
+.woocommerce-account .woocommerce form.login,
+.woocommerce-account .woocommerce form.register {
+    display: none;
+}
+
+.woocommerce-account .woocommerce h2.swoop {
+  display: block;
+}
+
+.a0-show-core-login #registerform,
+.a0-show-core-login #loginform,
+.a0-show-core-login #lostpasswordform,
+.a0-show-core-login #login_error,
+.a0-show-core-login #login #nav,
+.a0-show-core-login.woocommerce-checkout .woocommerce-info,
+.a0-show-core-login.woocommerce-account .woocommerce h2,
+.a0-show-core-login.woocommerce-account .woocommerce form.login {
+    display: block;
+}
+
+.woocommerce-checkout .woocommerce-info ~ .woocommerce-info {
+    display: block;
+}
+
+.woocommerce-account #extra-options {
+    padding:0;
+}

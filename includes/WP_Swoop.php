@@ -11,7 +11,7 @@ class WP_Swoop {
 
   public function __construct($file) {
 
-    $this->options = get_option( SWOOP_OPTIONS_KEY );    
+    $this->options = get_option( SWOOP_OPTIONS_KEY );
     register_uninstall_hook($file, array('WP_Swoop', 'uninstall'));
 
     add_action( 'rest_api_init', function () {
@@ -119,10 +119,6 @@ class WP_Swoop {
   }
 
   public function add_swoop_login_button() {
-    if (isset($_GET['reauth'])) {
-      echo '<div>Unable to log in. Please ensure that you have a valid account on this website or that users are allowed to register.</div><br>';
-    }
-
     $redirectTo = $_GET['redirect_to'];
     $redirectQuery = '';
     if($redirectTo) {
