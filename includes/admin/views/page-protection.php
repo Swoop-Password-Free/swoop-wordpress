@@ -1,7 +1,7 @@
 <div class="wrap">
 
     <form method="post" action="<?php echo esc_html( admin_url( 'admin-post.php' ) ); ?>">
-
+        <input type="hidden" name="action" value="protect">
         <div id="universal-message-container">
             <h2>Page Protection</h2>
 

@@ -5,8 +5,9 @@
     private $options;
 
     public function __construct($options) {
-      $this->options = $options;
-      add_action( 'admin_post', array( $this, 'save' ) );
+      $this->options = $options;      
+      add_action( 'admin_post_protect',array( $this, 'save' ) );
+      add_action( 'admin_post_nopriv_protect', array( $this, 'save' ) );
     }
 
     public function create() {
@@ -16,7 +17,6 @@
     }
 
     public function save() {
-
         // First, validate the nonce and verify the user as permission to save.
         if ( ! ( $this->has_valid_nonce() && current_user_can( 'manage_options' ) ) ) {
             // TODO: Display an error message.
@@ -26,7 +26,7 @@
 
         // If the above are valid, sanitize and save the option.
         if ( null !== wp_unslash( $_POST[SWOOP_PROTECT_REDIRECT_PAGE_ID_KEY] ) ) {
-            $value = sanitize_text_field( $_POST[SWOOP_PROTECT_REDIRECT_PAGE_ID_KEY] );            
+            $value = sanitize_text_field( $_POST[SWOOP_PROTECT_REDIRECT_PAGE_ID_KEY] );
             $this->options[SWOOP_PROTECT_REDIRECT_PAGE_ID_KEY] = $value;
             update_option( SWOOP_OPTIONS_KEY, $this->options );
         }

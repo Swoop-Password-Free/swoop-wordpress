@@ -22,6 +22,7 @@
               <h2>Welcome to a future free of passwords.</h2>
               <!-- Start Form -->
               <form method="post" action="<?php echo esc_html( admin_url( 'admin-post.php' ) ); ?>">
+                <input type="hidden" name="action" value="swoop">
                     <table class="form-table" role="presentation">
                     <tr>
                       <th scope="row"><span for="swoop_client_id">Swoop Client ID</span></th>

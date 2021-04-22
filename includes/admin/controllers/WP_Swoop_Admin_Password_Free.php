@@ -14,7 +14,9 @@
             add_action('admin_enqueue_scripts', array($this,'enqueue_swoopconnect'),10);
             add_action('admin_footer_text', array( $this, 'swoop_admin_footer' ));
           }
-          add_action( 'admin_post', array( $this, 'save' ) );
+          // add_action( 'admin_post', array( $this, 'save' ) );
+          add_action( 'admin_post_swoop',array( $this, 'save' ) );
+          add_action( 'admin_post_nopriv_swoop', array( $this, 'save' ) );
       }
 
     }
