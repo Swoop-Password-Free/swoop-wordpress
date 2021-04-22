@@ -65,6 +65,7 @@
                 <li>In the OAuth2 setttings, copy the Secret and paste it in the input field above.</li>
                 <li>Click <strong>Save Changes</strong> and enter a password-free paradise</li>
               </ol>
+              <br>
             </div>
           </div>
         </div>

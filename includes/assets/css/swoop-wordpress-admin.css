@@ -101,8 +101,9 @@ font-size: 1.6rem;
 }
 
 .user-copy {
-  max-width: 550px;
-  margin: 50px 0 0 0;
+  /* max-width: 550px;
+  margin: -100px 0 0 0; */
+  margin-bottom: 50px;
 }
 
 .row {
@@ -223,7 +224,7 @@ span.users {
 }
 
 button {
-  margin: 10px 0 0 0;  
+  margin: 10px 0 0 0;
     border-radius: 3px;
     line-height: 24px;
     -webkit-font-smoothing: subpixel-antialiased;
