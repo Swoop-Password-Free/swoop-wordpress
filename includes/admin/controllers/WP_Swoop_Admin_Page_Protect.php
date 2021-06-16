@@ -5,9 +5,18 @@
     private $options;
 
     public function __construct($options) {
-      $this->options = $options;      
-      add_action( 'admin_post_protect',array( $this, 'save' ) );
-      add_action( 'admin_post_nopriv_protect', array( $this, 'save' ) );
+      $this->options = $options;
+
+      if ( is_admin() ){ // for Admin Dashboard Only
+         // Embed the Script on our Plugin's Option Page Only
+         if ( isset($_GET['page']) &&
+         ($_GET['page'] == 'swoop-protect') ) {
+            add_action('admin_footer_text', array( $this, 'swoop_admin_footer' ));
+            add_action('admin_enqueue_scripts', array($this,'enqueue_css'),10);
+          }
+          add_action( 'admin_post_protect',array( $this, 'save' ) );
+          add_action( 'admin_post_nopriv_protect', array( $this, 'save' ) );
+      }
     }
 
     public function create() {
@@ -74,6 +83,20 @@
         wp_safe_redirect( urldecode( $url ) );
         exit;
 
+    }
+
+    public function enqueue_css() {
+      wp_enqueue_style('swoop_css', plugin_dir_url(__FILE__) . '../../assets/css/swoop-admin.css',20);
+    }
+
+    public function swoop_admin_footer() {
+        echo '<hr />
+        <ul id="swoop-footer">
+            <li><a href="https://docs.swoopnow.com/docs/wordpress" target="_blank">Documentation</li>
+            <li><a href="https://swoopnow.com/support" target="_blank">Support</li>
+            <li><a href="https://dashboard.swoop.email/" target="_blank">Swoop Dashboard</a></li>
+            <li><a href="https://swoopnow.com/" target="_blank">Learn more about Swoop</a></li>
+        </ul>';
     }
   }
 ?>

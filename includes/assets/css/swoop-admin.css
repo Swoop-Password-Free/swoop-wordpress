@@ -1,0 +1,52 @@
+#swoop-wrapper {
+    margin: 3em 0 0 2em;
+    max-width: 850px;
+}
+
+a, a:visited, a:active {
+    color: #29AE7D;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+#swoop-footer a, #swoop-footer a:visited, #swoop-footer a:active {
+    color: #000000;
+    font-weight: normal;
+    text-decoration: none;
+}
+
+h2 {
+    margin: 2em 0 0 0;
+}
+p {
+    margin: .5em 0 1em 0;
+    font-size: 14px;
+}
+
+.form-table td p {
+    font-size: 12px;
+}
+
+.form-table th {
+    width: 125px;
+}
+
+.wp-core-ui .button-primary {
+    background: #29AE7D;
+    border-color: #29AE7D;
+}
+.wp-core-ui .button-primary:hover {
+    background: #212529;
+    border-color: #212529;
+}
+
+#swoop-footer { margin: 1.5em 0 0 0;}
+
+#swoop-footer li {
+  display: inline-block;
+  margin: 0 1em 0 0;
+}

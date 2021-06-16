@@ -47,14 +47,14 @@ class WP_Swoop_Admin
             array( $this->passwordFreePage, 'create' )
         );
 
-        add_submenu_page(
-            SWOOP_PLUGIN_SLUG, // parent
-            SWOOP_PROTECT_MENU_TITLE,
-            SWOOP_PROTECT_MENU_NAME,
-            'manage_options',
-            SWOOP_PROTECT_PLUGIN_SLUG,
-            array( $this->protectPage, 'create' )
-        );
+        // add_submenu_page(
+        //     SWOOP_PLUGIN_SLUG, // parent
+        //     SWOOP_PROTECT_MENU_TITLE,
+        //     SWOOP_PROTECT_MENU_NAME,
+        //     'manage_options',
+        //     SWOOP_PROTECT_PLUGIN_SLUG,
+        //     array( $this->protectPage, 'create' )
+        // );
     }
 
 }

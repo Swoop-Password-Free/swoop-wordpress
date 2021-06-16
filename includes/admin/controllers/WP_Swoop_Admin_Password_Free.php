@@ -11,8 +11,8 @@
       if ( is_admin() ){ // for Admin Dashboard Only
          // Embed the Script on our Plugin's Option Page Only
          if ( isset($_GET['page']) && $_GET['page'] == 'swoop' ) {
-            add_action('admin_enqueue_scripts', array($this,'enqueue_swoopconnect'),10);
             add_action('admin_footer_text', array( $this, 'swoop_admin_footer' ));
+            add_action('admin_enqueue_scripts', array($this,'enqueue_css'),10);
           }
           // add_action( 'admin_post', array( $this, 'save' ) );
           add_action( 'admin_post_swoop',array( $this, 'save' ) );
@@ -45,21 +45,6 @@
       $client_id = array_key_exists(SWOOP_CLIENT_ID_KEY, $options) ? $options[SWOOP_CLIENT_ID_KEY] : "";
       $client_secret = array_key_exists(SWOOP_CLIENT_SECRET_KEY, $options) ? $options[SWOOP_CLIENT_SECRET_KEY] : "";
       include ( plugin_dir_path( __FILE__ ) . '../views/password-free.php' );
-    }
-
-    public function swoop_admin_footer() {
-        echo '
-        <p id="footer-left" class="alignleft">Please rate Swoop <a href="https://wordpress.org/support/plugin/swoop-password-free-authentication/reviews/?filter=5#new-post"/><span class="gold">★★★★★</span> on WordPress.org</a> to help us spread the word. Thank you from the Swoop team!</p>
-        ';
-    }
-
-    public function enqueue_swoopconnect() {
-      // wp_enqueue_script('swoopconnect_js', plugin_dir_url(__FILE__) . '../../assets/js/swoopconnect.js',10);
-      // wp_enqueue_script('swoop_admin_js', plugin_dir_url(__FILE__) . '../../assets/js/swoop_admin.js',10,1.3);
-      wp_enqueue_style('bootstrap','https://getbootstrap.com/docs/4.1/dist/css/bootstrap.min.css', 1);
-      wp_enqueue_style('swoopconnect_css', plugin_dir_url(__FILE__) . '../../assets/css/swoop-wordpress-admin.css',20);
-      // wp_enqueue_style('google_font', 'https://fonts.googleapis.com/css2?family=Lato&family=Rubik:wght@700&display=swap', 3);
-
     }
 
     public function save() {
@@ -122,6 +107,20 @@
         wp_safe_redirect( urldecode( $url ) );
         exit;
 
+    }
+
+    public function enqueue_css() {
+      wp_enqueue_style('swoop_css', plugin_dir_url(__FILE__) . '../../assets/css/swoop-admin.css',20);
+    }
+
+    public function swoop_admin_footer() {
+        echo '<hr />
+        <ul id="swoop-footer">
+            <li><a href="https://docs.swoopnow.com/docs/wordpress" target="_blank">Documentation</li>
+            <li><a href="https://swoopnow.com/support" target="_blank">Support</li>
+            <li><a href="https://dashboard.swoop.email/" target="_blank">Swoop Dashboard</a></li>
+            <li><a href="https://swoopnow.com/" target="_blank">Learn more about Swoop</a></li>
+        </ul>';
     }
   }
 ?>

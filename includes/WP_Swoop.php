@@ -11,6 +11,12 @@ class WP_Swoop {
 
   public function __construct($file) {
 
+    $this->swoop = new Swoop(
+      $this->options[SWOOP_CLIENT_ID_KEY],
+      $this->options[SWOOP_CLIENT_SECRET_KEY],
+      site_url(  "wp-json/" . SWOOP_PLUGIN_NAMESPACE . "/" . SWOOP_PLUGIN_CALLBACK )
+    );
+
     $this->options = get_option( SWOOP_OPTIONS_KEY );
     register_uninstall_hook($file, array('WP_Swoop', 'uninstall'));
 
@@ -31,9 +37,11 @@ class WP_Swoop {
         site_url(  "wp-json/" . SWOOP_PLUGIN_NAMESPACE . "/" . SWOOP_PLUGIN_CALLBACK )
       );
 
-      add_action( 'login_form', array($this, 'add_swoop_login_button') );
-      add_action( 'register_form', array($this, 'add_swoop_signup_button'));
-      $this->remove_login_form();
+      if(!isset($_GET["use-password"])) {
+        add_action( 'login_form', array($this, 'add_swoop_login_button') );
+        add_action( 'register_form', array($this, 'add_swoop_signup_button'));
+        $this->remove_login_form();
+      }
 
       add_action('wp_logout',array($this,'swoop_logout'));
       add_filter( 'allowed_http_origins', array($this, 'add_swoop_to_origins') );
@@ -125,14 +133,18 @@ class WP_Swoop {
       $redirectQuery = '&user_meta[redirect_to]=' . $redirectTo;
     }
 
-    echo '<a href="'.SWOOP_URL.SWOOP_AUTH_ENDPOINT.
-    '?client_id='.$this->options[SWOOP_CLIENT_ID_KEY].
-    '&redirect_uri='.site_url(  "wp-json/" . SWOOP_PLUGIN_NAMESPACE . "/" . SWOOP_PLUGIN_CALLBACK ).
-    '&scope=email'.
-    $redirectQuery .
-    '&response_type=code">'.
-    '<img id=\'swoop_button\' style=\'display: block; max-width: 100%; margin: 0px auto 15px;\' src=\'' . plugin_dir_url( __DIR__ ) . 'includes/assets/images/button-swoop.svg' . '\' alt=\'Swoop In With Email\' >
-    </a>';
+    $url =  "//{$_SERVER['HTTP_HOST']}{$_SERVER['REQUEST_URI']}";
+    $escaped_url = htmlspecialchars( $url, ENT_QUOTES, 'UTF-8' );
+    if(strpos($escaped_url,'?') !== false) {
+      $escaped_url = $escaped_url . '&use-password=1';
+    } else {
+      $escaped_url = $escaped_url . '?use-password=1';
+    }
+
+    echo '<a href="'.$this->swoop_login_url($redirectTo).'">' .
+    '<img id=\'swoop_button\' style=\'display: block; max-width: 100%; margin: 0px auto 15px;\' src=\'' . plugin_dir_url( __DIR__ ) . 'includes/assets/images/swoop-button@2x.png' . '\' alt=\'Swoop In With Email\' >
+    </a><p class="swoop-login-with-password"><a href="'.$escaped_url.'">Log in with password</a></p>
+    <p class="swoop-login-blog-name"><a href="'.site_url().'">'.get_bloginfo( 'name' ).'</a></p>';
   }
 
   public function add_swoop_signup_button() {
@@ -148,17 +160,19 @@ class WP_Swoop {
     '&scope=email'.
     $redirectQuery .
     '&response_type=code">'.
-    '<img id=\'swoop_button\' style=\'display: block; max-width: 100%; margin: 0px auto 15px;\' src=\'' . plugin_dir_url( __DIR__ ) . 'includes/assets/images/button-swoop.svg' . '\' alt=\'Swoop In With Email\' >
+    '<img id=\'swoop_button\' style=\'display: block; max-width: 100%; margin: 0px auto 15px;\' src=\'' . plugin_dir_url( __DIR__ ) . 'includes/assets/images/swoop-button@2x.png' . '\' alt=\'Swoop In With Email\' >
     </a>';
   }
 
   public function enqueue_swoop_js($hook) {
-    wp_enqueue_script('swoop_js', plugin_dir_url(__FILE__) . 'assets/js/swoop-login.js',10);
+    wp_enqueue_style( 'swoop-login', plugin_dir_url(__FILE__) . 'assets/css/swoop-login.css' );
   }
 
   // Remove Login Form
   public function remove_login_form() {
-	  add_action('login_enqueue_scripts', array($this,'enqueue_swoop_js'),10);
+    if(!isset($_GET["use-password"])) {
+	     add_action('login_enqueue_scripts', array($this,'enqueue_swoop_js'),10);
+     }
   }
 
   // Theme funtions

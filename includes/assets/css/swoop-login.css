@@ -1,0 +1,39 @@
+.login form {
+  border: 0;
+  box-shadow: none;
+  background: none;
+}
+.forgetmenot {
+  display: none;
+}
+.submit {
+  display: none;
+}
+#nav {
+  display: none;
+}
+#backtoblog {
+  display: none;
+}
+#loginform > p:first-child {display: none;}
+#loginform > .user-pass-wrap {display: none;}
+
+.swoop-login-with-password {
+  margin-top: 40px;
+  text-align: center;
+}
+
+.swoop-login-with-password a {
+  text-decoration: none;
+  color: #333;
+}
+
+.swoop-login-blog-name {
+  margin-top: 10px;
+  text-align: center;
+}
+
+.swoop-login-blog-name a {
+  text-decoration: none;
+  color: #333;
+}
