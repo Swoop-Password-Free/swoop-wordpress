@@ -2,9 +2,9 @@
 include_once( plugin_dir_path( __FILE__ ) . '../config.php' );
 class Swoop {
 
-  private $clientId;
+  public $clientId;
   private $clientSecret;
-  private $redirectUrl;
+  public $redirectUrl;
 
   public $accessToken;
   public $refreshToken;
@@ -36,6 +36,7 @@ class Swoop {
       $response = $this->post(
         SWOOP_URL . SWOOP_TOKEN_ENDPOINT,
         array(
+          'grant_type'    => 'authorization_code',
           'code'          => $code,
           'client_id'     => $this->clientId,
           'client_secret' => $this->clientSecret,
@@ -45,7 +46,7 @@ class Swoop {
 
       $json = json_decode($response);
       $idToken = $json->{'id_token'};
-      $decoded = json_decode(base64_decode(str_replace('_', '/', str_replace('-','+',explode('.', $idToken)[1]))));
+      $decoded = $this->decodeToken($idToken);
       $email = $decoded->{'email'};
 
       $this->idToken = $json->id_token;;
@@ -57,6 +58,10 @@ class Swoop {
     } catch ( Exception $e) {
       return false;
     }
+  }
+
+  public function decodeToken($token) {
+    return json_decode(base64_decode(str_replace('_', '/', str_replace('-','+',explode('.', $token)[1]))));
   }
 
 /**

@@ -46,6 +46,10 @@ class WP_Swoop {
       add_action('wp_logout',array($this,'swoop_logout'));
       add_filter( 'allowed_http_origins', array($this, 'add_swoop_to_origins') );
 
+      // Add hook for admin <head></head>
+      add_action( 'login_head', array($this, 'add_swoop_init') );
+      add_action( 'wp_head', array($this, 'add_swoop_init') );
+
       new WP_Swoop_Shortcodes($this->swoop);
       new WP_Swoop_Protect($this->swoop);
     }
@@ -58,7 +62,13 @@ class WP_Swoop {
       $options[SWOOP_CLIENT_SECRET_KEY],
       site_url(  "wp-json/" . SWOOP_PLUGIN_NAMESPACE . "/" . SWOOP_PLUGIN_CALLBACK )
     );
-    $meta = $swoop->callback($data['code']);
+    $meta = null;
+
+    if($data['code']) {
+      $meta = $swoop->callback($data['code']);
+    } else if($data['token']) {
+      $meta = $swoop->decodeToken($data['token']);
+    }    
 
     if(!$meta) {
       wp_redirect( site_url() );
@@ -70,7 +80,7 @@ class WP_Swoop {
     if(isset($meta->{'user_meta'}) &&
     isset($meta->{'user_meta'}->{'redirect_to'}) &&
     strlen($meta->{'user_meta'}->{'redirect_to'}) > 0) {
-      $redirect_to = $meta->{'user_meta'}->{'redirect_to'};
+      $redirect_to = urldecode($meta->{'user_meta'}->{'redirect_to'});
     }
 
     if ($user) {
@@ -126,11 +136,21 @@ class WP_Swoop {
     delete_option(SWOOP_OPTIONS_KEY);
   }
 
+  function add_swoop_init() {
+    echo '
+      <script>
+      let swoop = new Swoop("'.$this->swoop->clientId.'", {session:false}, (user) => {
+        location.href = `'.$this->swoop->redirectUrl.'?token=${user.id_token}`;
+      });
+      </script>
+    ';
+  }
+
   public function add_swoop_login_button() {
     $redirectTo = $_GET['redirect_to'];
     $redirectQuery = '';
     if($redirectTo) {
-      $redirectQuery = '&user_meta[redirect_to]=' . $redirectTo;
+      $redirectQuery = '{redirect_to:\'' . $redirectTo . '\'}';
     }
 
     $url =  "//{$_SERVER['HTTP_HOST']}{$_SERVER['REQUEST_URI']}";
@@ -141,9 +161,10 @@ class WP_Swoop {
       $escaped_url = $escaped_url . '?use-password=1';
     }
 
-    echo '<a href="'.$this->swoop_login_url($redirectTo).'">' .
+    // echo '<a href="'.$this->swoop_login_url($redirectTo).'">' .
+    echo '<a href="#" onclick="swoop.in('.$redirectQuery.'); return false;">' .
     '<img id=\'swoop_button\' style=\'display: block; max-width: 100%; margin: 0px auto 15px;\' src=\'' . plugin_dir_url( __DIR__ ) . 'includes/assets/images/swoop-button@2x.png' . '\' alt=\'Swoop In With Email\' >
-    </a><p class="swoop-login-with-password"><a href="'.$escaped_url.'">Log in with password</a></p>
+    </a><p class="swoop-login-with-password"><a href="#" onclick="'.$escaped_url.'">Log in with password</a></p>
     <p class="swoop-login-blog-name"><a href="'.site_url().'">'.get_bloginfo( 'name' ).'</a></p>';
   }
 
@@ -151,28 +172,24 @@ class WP_Swoop {
     $redirectTo = $_GET['redirect_to'];
     $redirectQuery = '';
     if($redirectTo) {
-      $redirectQuery = '&user_meta[redirect_to]=' . $redirectTo;
+      $redirectQuery = '{redirect_to:\'' . $redirectTo . '\'}';
     }
 
-    echo '<a href="'.SWOOP_URL.SWOOP_AUTH_ENDPOINT.
-    '?client_id='.$this->options[SWOOP_CLIENT_ID_KEY].
-    '&redirect_uri='.site_url(  "wp-json/" . SWOOP_PLUGIN_NAMESPACE . "/" . SWOOP_PLUGIN_CALLBACK ).
-    '&scope=email'.
-    $redirectQuery .
-    '&response_type=code">'.
+    echo '<a href="#" onclick="swoop.in('.$redirectQuery.'); return false;">' .
     '<img id=\'swoop_button\' style=\'display: block; max-width: 100%; margin: 0px auto 15px;\' src=\'' . plugin_dir_url( __DIR__ ) . 'includes/assets/images/swoop-button@2x.png' . '\' alt=\'Swoop In With Email\' >
-    </a>';
+    </a><p class="swoop-login-with-password"><a href="#" onclick="'.$escaped_url.'">Log in with password</a></p>
+    <p class="swoop-login-blog-name"><a href="'.site_url().'">'.get_bloginfo( 'name' ).'</a></p>';
   }
 
   public function enqueue_swoop_js($hook) {
     wp_enqueue_style( 'swoop-login', plugin_dir_url(__FILE__) . 'assets/css/swoop-login.css' );
+    wp_enqueue_script( 'swoop-login-js', 'https://cdn.jsdelivr.net/npm/@swoop-password-free/swoop@1.1.3/dist/swoop.js' );
   }
 
   // Remove Login Form
   public function remove_login_form() {
-    if(!isset($_GET["use-password"])) {
-	     add_action('login_enqueue_scripts', array($this,'enqueue_swoop_js'),10);
-     }
+     add_action('login_enqueue_scripts', array($this,'enqueue_swoop_js'),10);
+     add_action('wp_enqueue_scripts', array($this,'enqueue_swoop_js'),10);
   }
 
   // Theme funtions
@@ -186,10 +203,6 @@ class WP_Swoop {
     } else {
       return $this->swoop->loginUrl();
     }
-  }
-
-  public function activated() {
-    echo 'Foo';
   }
 
 }

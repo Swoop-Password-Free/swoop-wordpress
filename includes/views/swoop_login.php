@@ -1,6 +1,6 @@
 <?php if(!is_user_logged_in()) { ?>
   <a class='button swoop-login'
-  href='<?php echo $loginUrl.'&user_meta[redirect_to]='.$redirectTo; ?>'>
+  href='#' onclick="swoop.in({redirect_to: '<?php echo $redirectTo; ?>'}); return false;">
   <?php echo $title; ?>
   </a>
 <?php } else { ?>

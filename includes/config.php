@@ -1,5 +1,5 @@
 <?php
-define("SWOOP_URL","https://auth.swoop.email");
+define("SWOOP_URL","https://staging.auth.swoop.email");
 define("SWOOP_AUTH_ENDPOINT","/oauth2/authorize");
 define("SWOOP_TOKEN_ENDPOINT","/oauth2/token");
 
