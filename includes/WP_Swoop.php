@@ -47,9 +47,10 @@ class WP_Swoop {
       add_filter( 'allowed_http_origins', array($this, 'add_swoop_to_origins') );
 
       // Add hook for admin <head></head>
-      add_action( 'login_head', array($this, 'add_swoop_init') );
+      add_action( 'login_head', array($this, 'add_swoop_init_to_login_head') );
       add_action( 'login_footer', array($this, 'add_swoop_to_footer') );
-      add_action( 'wp_head', array($this, 'add_swoop_init') );
+      add_action( 'wp_head', array($this, 'add_swoop_init_to_wp_head') );
+      add_action( 'wp_footer', array($this, 'add_swoop_to_footer') );
 
       new WP_Swoop_Shortcodes($this->swoop);
       new WP_Swoop_Protect($this->swoop);
@@ -137,15 +138,40 @@ class WP_Swoop {
     delete_option(SWOOP_OPTIONS_KEY);
   }
 
-  function add_swoop_init() {
+  function add_swoop_init_to_login_head() {
     echo '
       <script>
       let swoop = new Swoop("'.$this->swoop->clientId.'", {
         session:false,
-        platform: "wordpress",        
+        platform: "wordpress",
         callback: () => {
           // show loading
           document.getElementById("swoop-button").innerHTML = "<p class=\"swoop-loading\"><img src=\"'.plugin_dir_url( __DIR__ ) . 'includes/assets/images/swoop-secure-shield-20px.svg'.'\"><br />Swooping in...</p>";
+        }
+      });
+
+      const handleSwoopLogin = async () => {
+        let user = await swoop.init();
+        if(user) {
+          location.href = `'.$this->swoop->redirectUrl.'?token=${user.id_token}`;
+        }
+      }
+      </script>
+    ';
+  }
+  function add_swoop_init_to_wp_head() {
+    echo '
+      <script>
+      let swoop = new Swoop("'.$this->swoop->clientId.'", {
+        session:false,
+        platform: "wordpress",
+        callback: () => {
+          // show loading
+          document.getElementById("swoop-login-button").innerHTML = "Swooping in...";
+          document.getElementById("swoop-login-button").onclick = (e) => {
+            e.preventDefault();
+            return false;
+          }
         }
       });
 
