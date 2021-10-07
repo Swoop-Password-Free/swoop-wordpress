@@ -142,6 +142,7 @@ class WP_Swoop {
       <script>
       let swoop = new Swoop("'.$this->swoop->clientId.'", {
         session:false,
+        platform: "wordpress",        
         callback: () => {
           // show loading
           document.getElementById("swoop-button").innerHTML = "<p class=\"swoop-loading\"><img src=\"'.plugin_dir_url( __DIR__ ) . 'includes/assets/images/swoop-secure-shield-20px.svg'.'\"><br />Swooping in...</p>";
