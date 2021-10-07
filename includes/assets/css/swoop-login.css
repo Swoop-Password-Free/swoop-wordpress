@@ -37,3 +37,14 @@
   text-decoration: none;
   color: #333;
 }
+
+.swoop-loading {
+  text-align: center;
+  font-size: 22px;
+  /* color: rgb(0,171,117); */
+}
+
+.swoop-loading img {
+  width: 100px;
+  height: auto;
+}
