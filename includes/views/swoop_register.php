@@ -21,5 +21,5 @@
 </form>
 <?php } else { ?>
   <a class='button swoop-logout'
-  href="<?php echo $logoutUrl; ?>">Logout</a>
+  href="<?php echo $logoutUrl; ?>">Log out</a>
 <?php } ?>
