@@ -1,24 +1,24 @@
 === Swoop: Password-Free Authentication and 2FA ===
 Contributors: swoopbrandon
-Tags: passwordless, authentication, security, MFA, 2fa ,2fa login, 2fa auth, Oauth, 2step, auth, Two step Authentication, Two factor Auth
+Tags: passwordless, password-free, authentication, security, MFA, 2fa ,2fa login, 2fa auth, Oauth, 2step, auth, Two step Authentication, Two factor Auth, Emoji MFA
 Author: Swoop
 Author URI: https://swoopnow.com/
 Requires at least: 4.6
-Tested up to: 5.8.1
-Stable tag: 1.3.1
+Tested up to: 5.9.0
+Stable tag: 1.3.3
 Requires PHP: 5.2.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
-The Swoop WordPress plugin is a simple and secure password-free authentication service with 2FA.
+The Swoop WordPress plugin is a simple and secure password-free authentication service with optional 2FA, including our exclusive Emoji MFA.
 
 == Description ==
 
 The Swoop WordPress plugin is a simple and secure password-free authentication service. Imagine a world where your users are free to securely come and go from anywhere on your website without a password. We are passionate about the freedom that comes with eliminating passwords—and we believe you will be, too, once you download and install Swoop: Password-Free Authentication and 2FA.
 
-**What is Swoop?**
+**What Is Swoop?**
 
-Swoop: Password-Free Authentication is a 3rd party service that calls out to the following password free authentication service](https://swoopnow.com/). For more information on Swoops terms of service and privacy policy please visit our [legal page](https://swoopnow.com/legal/).
+Swoop: Password-Free Authentication is a 3rd party service that calls out to the following password-free authentication service](https://swoopnow.com/). For more information on Swoop's terms of service and privacy policy, please visit our [legal page](https://swoopnow.com/legal/).
 
 **Who Is Swoop For?**
 
@@ -30,7 +30,7 @@ But why stop there? Swoop is perfect for eliminating passwords from your user re
 
 - **Digital Marketers:** Sales is going to love you after installing Swoop. Provide verified emails that you know work with every registration.
 
-- **Conversion Rate Optimizers:** Reduce registration form abandonment rates by eliminating a “required” password field.
+- **Conversion Rate Optimizers:** Get more accounts and reduce registration form abandonment rates by eliminating a “required” password field.
 
 - **Product Designers:** Incorporate Swoop into your registration and login process for a friction-free experience. Less steps. More secure. More access.
 
@@ -59,7 +59,7 @@ Swoop also helps you:
 -   Patented authentication protocol leverages a combination of DKIM, SPF and and our own special sauce to ensure the integrity of each authentication request.
 -   Swoop replaces the centralized storage of passwords with digital signatures and tokenized authentication.
 -   With no passwords to get hacked or compromised, organizations dramatically reduce their liability caused by data breaches and phishing scams.
--Our easy-to-implement passwordless 2FA option offers the best of both worlds: delightful convenience for your end users and the highest standard of security for your website.
+-Our easy-to-implement passwordless 2FA options offer the best of both worlds: delightful convenience for your end users (choose Emoji MFA, PIN or SMS) and the highest standard of security for your website.
 
 **Access.**
 
@@ -77,22 +77,21 @@ Swoop also helps you:
 Swoop’s authentication service offers a choice of two convenient first-time authorization options for your end users.
 
 
-1.  Magic Message: Similar to the Magic Link but with even fewer steps and no typing. End users will simply send (instead of receiving, as in the Magic Link) a magic authentication email to authenticate.
+1.  Magic Message: Similar to the Magic Link but with no typing. End users will simply send (instead of receiving, as in the Magic Link) a magic authentication email to authenticate.
 
-2.  Magic Link: Your end users enter their email address to receive an email containing a Magic Link. They’ll click the link to authenticate.
+2.  Magic Code: Your end users enter their email address to receive an email containing a Magic Code. They’ll enter the code to authenticate.
 
-[vimeo https://player.vimeo.com/video/412762435]
-
-
-[vimeo https://player.vimeo.com/video/412763729]
 
 After initial authorization, Swoop will securely cookie your end users if you’ve enabled 1-Click Connect authorization on your website. The next time your end users return to your website, they’ll be able to authenticate by selecting the email address that’s registered with your site—in just one click.
 
-[vimeo https://player.vimeo.com/video/412765358]
+[vimeo https://player.vimeo.com/video/640400700]
 
 **Password-Free 2FA/MFA:**
 
-If you’ve been thinking about adding Second-Factor Authentication (2FA) or Multi-Factor Authentication (MFA) to your website, but felt intimidated by the technical legwork or potential frustration to your users: You just found the perfect solution. Swoop is the only service that lets you implement passwordless 2FA to your website in minutes. Just toggle on your favorite flavor of 2FA, including PIN pad and SMS text. After your users breeze through the password-free authorization flow described above, we’ll seamlessly serve them the second factor of your choice. That’s security you and your users can feel great about.
+If you’ve been thinking about adding Second-Factor Authentication (2FA) or Multi-Factor Authentication (MFA) to your website, but felt intimidated by the technical legwork or potential frustration to your users: You just found the perfect solution. Swoop is the only service that lets you implement passwordless 2FA on your website in minutes. Just toggle on your favorite flavor of 2FA, including PIN pad, SMS text and the world's first Emoji MFA. After your users breeze through the password-free authorization flow described above, we’ll seamlessly serve them the second factor of your choice. That’s security you and your users can feel great about.
+
+
+[vimeo https://player.vimeo.com/video/670878796]
 
 **Support:**
 
@@ -103,7 +102,7 @@ We look forward to securing your website without passwords!
 == Screenshots ==
 
 1. Swoop Service: Swoop In with email button used on WordPress Login
-1. Swoop Service: Magic Link or Magic Message authentication options
+1. Swoop Service: Magic Message authentication
 1. Swoop Service: Quick Login authentication
 
 == Installation ==
@@ -114,3 +113,5 @@ This section describes how to install the plugin and get it working.
 1. Activate the plugin through the 'Plugins' screen in WordPress.
 1. Use the Settings->Swoop: Password-Free Authentication screen to configure the plugin.
 1. Follow the on-screen instructions for registering for / connecting with your Swoop account.
+
+Use Swoop's passwordless login button on your WordPress website, on a landing page, as part of your paywall, or wherever else you want to enable passwordless login.

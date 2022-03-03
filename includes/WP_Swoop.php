@@ -2,7 +2,7 @@
 include_once("config.php");
 include_once("util/Swoop.php");
 include_once("WP_Swoop_Shortcodes.php");
-include_once("WP_Swoop_Protect.php");
+// include_once("WP_Swoop_Protect.php");
 
 class WP_Swoop {
 
@@ -11,30 +11,22 @@ class WP_Swoop {
 
   public function __construct($file) {
 
+    $this->options = get_option( SWOOP_OPTIONS_KEY );
+    
     $this->swoop = new Swoop(
       $this->options[SWOOP_CLIENT_ID_KEY],
       $this->options[SWOOP_CLIENT_SECRET_KEY],
       site_url(  "wp-json/" . SWOOP_PLUGIN_NAMESPACE . "/" . SWOOP_PLUGIN_CALLBACK )
     );
 
-    $this->options = get_option( SWOOP_OPTIONS_KEY );
     register_uninstall_hook($file, array('WP_Swoop', 'uninstall'));
-
-    add_action( 'rest_api_init', function () {
-      register_rest_route(SWOOP_PLUGIN_NAMESPACE , SWOOP_PLUGIN_CALLBACK , array(
-        'methods' => 'GET',
-        'callback' => array('WP_Swoop','swoop_callback'),
-        'args' => array('code'),
-        'permission_callback' => '__return_true'
-      ) );
-    } );
 
     if(isset($this->options[SWOOP_CLIENT_ID_KEY])) {
 
       $this->swoop = new Swoop(
         $this->options[SWOOP_CLIENT_ID_KEY],
         $this->options[SWOOP_CLIENT_SECRET_KEY],
-        site_url(  "wp-json/" . SWOOP_PLUGIN_NAMESPACE . "/" . SWOOP_PLUGIN_CALLBACK )
+        site_url(  plugin_dir_url( __DIR__ ) )
       );
 
       if(!isset($_GET["use-password"])) {
@@ -53,11 +45,11 @@ class WP_Swoop {
       add_action( 'wp_footer', array($this, 'add_swoop_to_footer') );
 
       new WP_Swoop_Shortcodes($this->swoop);
-      new WP_Swoop_Protect($this->swoop);
+      // new WP_Swoop_Protect($this->swoop);
     }
   }
 
-  static function swoop_callback( $data ) {
+  static function swoop_callback( $data ) {    
     $options = get_option( SWOOP_OPTIONS_KEY );
     $swoop = new Swoop(
       $options[SWOOP_CLIENT_ID_KEY],
@@ -66,11 +58,11 @@ class WP_Swoop {
     );
     $meta = null;
 
-    if($data['code']) {
+    if(isset($data['code'])) {
       $meta = $swoop->callback($data['code']);
-    } else if($data['token']) {
+    } else if(isset($data['token'])) {
       $meta = $swoop->decodeToken($data['token']);
-    }
+    }    
 
     if(!$meta) {
       wp_redirect( site_url() );
@@ -114,8 +106,9 @@ class WP_Swoop {
         } else {
           //  TODO: Do something if users cant register
           // Actually it's not super important
+          echo 'User registration is disabled. Please contact the site administrator.';
         }
-      } catch (Exception $e) {
+      } catch (Exception $e) {        
         error_log('exception');
       }
     }
@@ -153,15 +146,20 @@ class WP_Swoop {
       const handleSwoopLogin = async () => {
         let user = await swoop.init();
         if(user) {
-          location.href = `'.$this->swoop->redirectUrl.'?token=${user.id_token}`;
+          location.href = `'.wp_login_url().'?token=${user.id_token}`;
         }
       }
       </script>
     ';
+    if(isset($_GET['token'])) {
+      $this->swoop_callback(['token' => $_GET['token']]);
+    }
   }
   function add_swoop_init_to_wp_head() {
+    $url = preg_replace("/^http:/i", "https:", wp_login_url());
     echo '
       <script>
+      // Plugin Version: 1.3.3
       let swoop = new Swoop("'.$this->swoop->clientId.'", {
         session:false,
         platform: "wordpress",
@@ -178,7 +176,7 @@ class WP_Swoop {
       const handleSwoopLogin = async () => {
         let user = await swoop.init();
         if(user) {
-          location.href = `'.$this->swoop->redirectUrl.'?token=${user.id_token}`;
+          location.href = `'.$url.'?token=${user.id_token}`;
         }
       }
       </script>
@@ -254,3 +252,4 @@ class WP_Swoop {
   }
 
 }
+?>

@@ -1,6 +1,6 @@
 <?php
 include_once("config.php");
-include_once("admin/controllers/WP_Swoop_Admin_Page_Protect.php");
+// include_once("admin/controllers/WP_Swoop_Admin_Page_Protect.php");
 include_once("admin/controllers/WP_Swoop_Admin_Password_Free.php");
 
 class WP_Swoop_Admin
@@ -19,7 +19,7 @@ class WP_Swoop_Admin
     {
         $this->options = get_option( SWOOP_OPTIONS_KEY );
         $this->passwordFreePage = new WP_Swoop_Admin_Password_Free($this->options);
-        $this->protectPage = new WP_Swoop_Admin_Page_Protect($this->options);
+        // $this->protectPage = new WP_Swoop_Admin_Page_Protect($this->options);
         add_action( 'admin_menu', array( $this, 'add_plugin_page' ) );
     }
 

@@ -15,9 +15,9 @@
 	<br class="clear" />
 	<input type="hidden" name="redirect_to" value="<?php echo $redirectTo; ?>" />
 	<input type="hidden" name="swoop_register" value="true" />
-	<p class="submit">
+	<!-- <p class="submit"> -->
 		<input type="submit" name="wp-submit" id="wp-submit" class="button button-primary button-large" value="Register" />
-	</p>
+	<!-- </p> -->
 </form>
 <?php } else { ?>
   <a class='button swoop-logout'
