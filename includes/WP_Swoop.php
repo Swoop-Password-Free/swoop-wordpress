@@ -12,20 +12,14 @@ class WP_Swoop {
   public function __construct($file) {
 
     $this->options = get_option( SWOOP_OPTIONS_KEY );
-    
-    $this->swoop = new Swoop(
-      $this->options[SWOOP_CLIENT_ID_KEY],
-      $this->options[SWOOP_CLIENT_SECRET_KEY],
-      site_url(  "wp-json/" . SWOOP_PLUGIN_NAMESPACE . "/" . SWOOP_PLUGIN_CALLBACK )
-    );
 
     register_uninstall_hook($file, array('WP_Swoop', 'uninstall'));
 
     if(isset($this->options[SWOOP_CLIENT_ID_KEY])) {
 
       $this->swoop = new Swoop(
-        $this->options[SWOOP_CLIENT_ID_KEY],
-        $this->options[SWOOP_CLIENT_SECRET_KEY],
+        isset($this->options[SWOOP_CLIENT_ID_KEY]) ? $this->options[SWOOP_CLIENT_ID_KEY] : "",
+        isset($this->options[SWOOP_CLIENT_SECRET_KEY]) ? $this->options[SWOOP_CLIENT_SECRET_KEY] : "",
         site_url(  plugin_dir_url( __DIR__ ) )
       );
 

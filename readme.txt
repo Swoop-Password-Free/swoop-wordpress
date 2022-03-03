@@ -103,7 +103,9 @@ We look forward to securing your website without passwords!
 
 1. Swoop Service: Swoop In with email button used on WordPress Login
 1. Swoop Service: Magic Message authentication
-1. Swoop Service: Quick Login authentication
+1. Swoop Service: Magic Message waiting
+1. Swoop Service: Magic Code authentication
+1. Swoop Service: Succes
 
 == Installation ==
 
