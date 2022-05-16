@@ -31,17 +31,19 @@
 
     public function loginForm($atts, $content = "") {
       $shortCodeAttributes = shortcode_atts( array(
+        'custom' => false,
     		'title' => 'Login',
         'target' => admin_url()
     	), $atts );
 
       $redirectTo = $shortCodeAttributes['target'];
-      if($_GET['redirect_to']) {
+      if(isset($_GET['redirect_to']) && $_GET['redirect_to']) {
         $redirectTo = $_GET['redirect_to'];
       }
       $loginUrl = $this->swoop->loginUrl();
       $logoutUrl = wp_logout_url();
       $title = $shortCodeAttributes['title'];
+      $custom = $shortCodeAttributes['custom'];
 
       ob_start();
       include 'views/swoop_login.php';
