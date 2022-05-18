@@ -73,7 +73,7 @@ class WP_Swoop {
     }
 
     function add_swoop_button($title) {
-        echo "<div class=\"swoop-button\"></div>\n";
+      include 'views/swoop_wp_login.php';
     }
     
     // Remove Login Form
@@ -98,7 +98,8 @@ class WP_Swoop {
     }
 
     public function add_swoop_to_footer() {
-        include 'views/swoop_js.php';
+        include 'views/swoop_js.php';        
+        include 'views/swoop_wp_login_footer.php';
     }
 
     static function swoop_callback( $data ) {            
