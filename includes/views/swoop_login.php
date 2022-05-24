@@ -7,7 +7,7 @@
   <?php } else { ?>
     <div class="swoop-button"
       data-redirect_to="<?php echo $redirectTo; ?>">
-    ></div>
+    </div>
   <?php } ?>
 <?php } else { ?>
   <a class='button swoop-logout'
