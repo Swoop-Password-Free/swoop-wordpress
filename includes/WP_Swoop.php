@@ -16,28 +16,34 @@ class WP_Swoop {
 
         if(isset($this->options[SWOOP_CLIENT_ID_KEY])) {
 
-        $this->swoop = new Swoop(
-            isset($this->options[SWOOP_CLIENT_ID_KEY]) ? $this->options[SWOOP_CLIENT_ID_KEY] : "",
-            isset($this->options[SWOOP_CLIENT_SECRET_KEY]) ? $this->options[SWOOP_CLIENT_SECRET_KEY] : "",
-            site_url(  plugin_dir_url( __DIR__ ) )
-        );
+          $this->swoop = new Swoop(
+              isset($this->options[SWOOP_CLIENT_ID_KEY]) ? $this->options[SWOOP_CLIENT_ID_KEY] : "",
+              isset($this->options[SWOOP_CLIENT_SECRET_KEY]) ? $this->options[SWOOP_CLIENT_SECRET_KEY] : "",
+              site_url(  plugin_dir_url( __DIR__ ) )
+          );
 
-        if(!isset($_GET["use-password"])) {
-            add_action( 'login_form', array($this, 'add_swoop_login_button') );
-            add_action( 'register_form', array($this, 'add_swoop_signup_button'));
-            $this->add_swoop_js();
+          if(!isset($_GET["use-password"])) {
+              add_action( 'login_form', array($this, 'add_swoop_login_button') );
+              add_action( 'register_form', array($this, 'add_swoop_signup_button'));
+              $this->add_swoop_js();
+              add_action('wp_logout',array($this,'swoop_logout'));        
+              // Add hook for admin <head></head>
+              add_action( 'login_head', array($this, 'add_swoop_init_to_login_head') );
+              add_action( 'login_footer', array($this, 'add_swoop_to_footer') , 1000000000);
+              add_action( 'wp_head', array($this, 'add_swoop_init_to_wp_head') );
+              add_action( 'wp_footer', array($this, 'add_swoop_to_footer') , 1000000000);
+
+              add_action('init', array($this, 'register_swoop_callback'),1);
+
+              new WP_Swoop_Shortcodes($this->swoop);        
+          }        
         }
+    }
 
-        add_action('wp_logout',array($this,'swoop_logout'));        
-
-        // Add hook for admin <head></head>
-        add_action( 'login_head', array($this, 'add_swoop_init_to_login_head') );
-        add_action( 'login_footer', array($this, 'add_swoop_to_footer') , 1000000000);
-        add_action( 'wp_head', array($this, 'add_swoop_init_to_wp_head') );
-        add_action( 'wp_footer', array($this, 'add_swoop_to_footer') , 1000000000);
-
-        new WP_Swoop_Shortcodes($this->swoop);        
-        }
+    function register_swoop_callback() {
+      if(isset($_GET['token'])) {
+        $this->swoop_callback(['token' => $_GET['token']]);
+      }   
     }
 
     function swoop_logout(){
@@ -58,10 +64,7 @@ class WP_Swoop {
 
     function addSwoopJSFunctions() {
         $clientId = isset($this->options[SWOOP_CLIENT_ID_KEY]) ? $this->options[SWOOP_CLIENT_ID_KEY] : "";
-        echo "<meta name=\"swoop-client-id\" content=\"$clientId\">\n";        
-        if(isset($_GET['token'])) {
-            $this->swoop_callback(['token' => $_GET['token']]);
-          }   
+        echo "<meta name=\"swoop-client-id\" content=\"$clientId\">\n";                
     }
 
     function add_swoop_login_button() {
@@ -92,9 +95,9 @@ class WP_Swoop {
         }, 10, 2 );
     }
 
-    public function enqueue_swoop_js($hook) {
-        wp_enqueue_style( 'swoop-login', plugin_dir_url(__FILE__) . 'assets/css/swoop-login.css' );
-        wp_enqueue_script( 'swoop-login-js', 'https://cdn.jsdelivr.net/npm/@swoop-password-free/swoop@1.3.2/dist/swoop.js' );
+    public function enqueue_swoop_js($hook) {      
+        wp_enqueue_style( 'swoop-login', plugin_dir_url(__FILE__) . 'assets/css/swoop-login.css' );      
+        wp_enqueue_script( 'swoop-login-js', 'https://cdn.jsdelivr.net/npm/@swoop-password-free/swoop@1.3.3/dist/swoop.js' );
     }
 
     public function add_swoop_to_footer() {
@@ -118,11 +121,12 @@ class WP_Swoop {
           $meta = $swoop->decodeToken($data['token']);
         }    
     
-        if(!$meta) {
-          wp_redirect( site_url() );
+        if(!$meta) {          
+          echo json_encode(['redirect_to' => site_url()]);
+          exit(0);
         }
     
-        $user = get_user_by('email', $meta->email);
+        $user = get_user_by('email', $meta->email);        
         $redirect_to = admin_url();
     
         if(isset($meta->{'user_meta'}) &&
@@ -139,6 +143,8 @@ class WP_Swoop {
             wp_set_auth_cookie($user_id);
           } catch (Exception $e) {
             error_log('exception');
+            echo json_encode(['error' => 'Something went wrong. Please try again.']);
+            exit(0);     
           }
         } else {
           try {
@@ -162,14 +168,18 @@ class WP_Swoop {
             } else {
               //  TODO: Do something if users cant register
               // Actually it's not super important
-              echo 'User registration is disabled. Please contact the site administrator.';
+              // echo 'User registration is disabled. Please contact the site administrator.';
+              echo json_encode(['error' => "Account Not Found!\nUser registration is disabled. Please contact the site administrator."]);
+              exit(0);     
             }
           } catch (Exception $e) {        
             error_log('exception');
+            echo json_encode(['error' => 'Something went wrong. Please try again.']);
+            exit(0);     
           }
         }        
-
-        wp_redirect($redirect_to);
-        exit;
+        
+        echo json_encode(['redirect_to' => $redirect_to]);
+        exit(0);        
       }
 }

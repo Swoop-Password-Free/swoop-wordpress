@@ -31,7 +31,7 @@
 
     public function loginForm($atts, $content = "") {
       $shortCodeAttributes = shortcode_atts( array(
-        'custom' => false,
+        'button' => false,
     		'title' => 'Login',
         'target' => admin_url()
     	), $atts );
@@ -43,10 +43,10 @@
       $loginUrl = $this->swoop->loginUrl();
       $logoutUrl = wp_logout_url();
       $title = $shortCodeAttributes['title'];
-      $custom = $shortCodeAttributes['custom'];
+      $button = $shortCodeAttributes['button'];
 
       ob_start();
-      include 'views/swoop_login.php';
+      include 'views/swoop_login.php';                
       return ob_get_clean();
     }
   }
