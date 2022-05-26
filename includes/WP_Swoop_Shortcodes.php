@@ -7,7 +7,7 @@
       add_shortcode( 'swoop_register', array($this,'registrationForm') );
       add_shortcode( 'swoop_login', array($this,'loginForm') );
       add_action( 'register_post', array($this, 'handleRegistration'), 10, 3 );
-      add_shortcode('swoop_needs_login', array($this, 'shortcode_needLogin'));
+      add_shortcode('swoop_requires_login', array($this, 'shortcode_needLogin'));
     }
 
     public function registrationForm($atts, $content = "") {

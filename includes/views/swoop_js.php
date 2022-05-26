@@ -1,8 +1,6 @@
 <script>
     const configureSwoop = () => {      
-      window.swoop.configure({
-        endpoint: "http://staging.auth.swoop.email",
-        apiEndpoint: "https://api.swoop.email",
+      window.swoop.configure({        
         onSuccess: swoopOnSuccess
       });
     }
