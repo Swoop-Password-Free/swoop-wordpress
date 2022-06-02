@@ -26,7 +26,7 @@ class WP_Swoop {
               add_action( 'login_form', array($this, 'add_swoop_login_button') );
               add_action( 'register_form', array($this, 'add_swoop_signup_button'));
               $this->add_swoop_js();
-              add_action('wp_logout',array($this,'swoop_logout'));        
+              add_action('wp_logout',array($this,'swoop_logout'));
               // Add hook for admin <head></head>
               add_action( 'login_head', array($this, 'add_swoop_init_to_login_head') );
               add_action( 'login_footer', array($this, 'add_swoop_to_footer') , 1000000000);
@@ -35,15 +35,15 @@ class WP_Swoop {
 
               add_action('init', array($this, 'register_swoop_callback'),1);
 
-              new WP_Swoop_Shortcodes($this->swoop);        
-          }        
+              new WP_Swoop_Shortcodes($this->swoop);
+          }
         }
     }
 
     function register_swoop_callback() {
       if(isset($_GET['token'])) {
         $this->swoop_callback(['token' => $_GET['token']]);
-      }   
+      }
     }
 
     function swoop_logout(){
@@ -54,17 +54,17 @@ class WP_Swoop {
         delete_option(SWOOP_OPTIONS_KEY);
     }
 
-    function add_swoop_init_to_login_head() {     
-        $this->addSwoopJSFunctions();           
+    function add_swoop_init_to_login_head() {
+        $this->addSwoopJSFunctions();
     }
-    
+
     function add_swoop_init_to_wp_head() {
         $this->addSwoopJSFunctions();
     }
 
     function addSwoopJSFunctions() {
         $clientId = isset($this->options[SWOOP_CLIENT_ID_KEY]) ? $this->options[SWOOP_CLIENT_ID_KEY] : "";
-        echo "<meta name=\"swoop-client-id\" content=\"$clientId\">\n";                
+        echo "<meta name=\"swoop-client-id\" content=\"$clientId\">\n";
     }
 
     function add_swoop_login_button() {
@@ -78,35 +78,35 @@ class WP_Swoop {
     function add_swoop_button($title) {
       include 'views/swoop_wp_login.php';
     }
-    
+
     // Remove Login Form
     public function add_swoop_js() {
         add_action('login_enqueue_scripts', array($this,'enqueue_swoop_js'),10);
         add_action('wp_enqueue_scripts', array($this,'enqueue_swoop_js'),10);
 
-        add_filter( 'script_loader_tag', function ( $tag, $handle ) {            
+        add_filter( 'script_loader_tag', function ( $tag, $handle ) {
 
             if ( 'swoop-login-js' !== $handle ) {
                 return $tag;
             }
-        
-            return str_replace( ' src', ' async defer src', $tag ); // defer the script            
-        
+
+            return str_replace( ' src', ' async defer src', $tag ); // defer the script
+
         }, 10, 2 );
     }
 
-    public function enqueue_swoop_js($hook) {      
-        wp_enqueue_style( 'swoop-login', plugin_dir_url(__FILE__) . 'assets/css/swoop-login.css' );      
-        wp_enqueue_script( 'swoop-login-js', 'https://cdn.jsdelivr.net/npm/@swoop-password-free/swoop@1.3.5/dist/swoop.js' );
+    public function enqueue_swoop_js($hook) {
+        wp_enqueue_style( 'swoop-login', plugin_dir_url(__FILE__) . 'assets/css/swoop-login.css' );
+        wp_enqueue_script( 'swoop-login-js', 'https://cdn.jsdelivr.net/npm/@swoop-password-free/swoop@1.3.8/dist/swoop.js' );
     }
 
     public function add_swoop_to_footer() {
-        include 'views/swoop_js.php';        
+        include 'views/swoop_js.php';
         include 'views/swoop_wp_login_footer.php';
     }
 
-    static function swoop_callback( $data ) {            
-        
+    static function swoop_callback( $data ) {
+
         $options = get_option( SWOOP_OPTIONS_KEY );
         $swoop = new Swoop(
           $options[SWOOP_CLIENT_ID_KEY],
@@ -114,29 +114,29 @@ class WP_Swoop {
           site_url(  "wp-json/" . SWOOP_PLUGIN_NAMESPACE . "/" . SWOOP_PLUGIN_CALLBACK )
         );
         $meta = null;
-    
+
         if(isset($data['code'])) {
           $meta = $swoop->callback($data['code']);
         } else if(isset($data['token'])) {
           $meta = $swoop->decodeToken($data['token']);
-        }    
-    
-        if(!$meta) {          
+        }
+
+        if(!$meta) {
           echo json_encode(['redirect_to' => site_url()]);
           exit(0);
         }
-    
-        $user = get_user_by('email', $meta->email);        
+
+        $user = get_user_by('email', $meta->email);
         $redirect_to = admin_url();
-    
+
         if(isset($meta->{'user_meta'}) &&
         isset($meta->{'user_meta'}->{'redirect_to'}) &&
         strlen($meta->{'user_meta'}->{'redirect_to'}) > 0) {
           $redirect_to = urldecode($meta->{'user_meta'}->{'redirect_to'});
         }
 
-        $redirect_to = str_replace('&reauth=1', '', $redirect_to);        
-    
+        $redirect_to = str_replace('&reauth=1', '', $redirect_to);
+
         if ($user) {
           try {
             $user_id = $user->ID;
@@ -144,42 +144,42 @@ class WP_Swoop {
           } catch (Exception $e) {
             error_log('exception');
             echo json_encode(['error' => 'Something went wrong. Please try again.']);
-            exit(0);     
+            exit(0);
           }
         } else {
           try {
             if (get_option('users_can_register')) {
               $random_password = wp_generate_password();
-    
+
               $username = isset($meta->user_meta) && isset($meta->user_meta->user_login) ?
               $meta->user_meta->user_login :
               $meta->email;
-    
+
               $user_id = wp_create_user($username, $random_password, $meta->email);
-    
+
               // Update meta if registering
               if($meta->user_meta) {
                 foreach ($meta->user_meta as $key => $value) {
                   update_user_meta($user_id, $key, $value);
                 }
               }
-    
+
               wp_set_auth_cookie($user_id);
             } else {
               //  TODO: Do something if users cant register
               // Actually it's not super important
               // echo 'User registration is disabled. Please contact the site administrator.';
               echo json_encode(['error' => "Account Not Found!\nUser registration is disabled. Please contact the site administrator."]);
-              exit(0);     
+              exit(0);
             }
-          } catch (Exception $e) {        
+          } catch (Exception $e) {
             error_log('exception');
             echo json_encode(['error' => 'Something went wrong. Please try again.']);
-            exit(0);     
+            exit(0);
           }
-        }        
-        
+        }
+
         echo json_encode(['redirect_to' => $redirect_to]);
-        exit(0);        
+        exit(0);
       }
 }

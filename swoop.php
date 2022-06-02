@@ -2,7 +2,7 @@
 /*
 Plugin Name: Swoop: Password-Free Authentication With 2FA
 Description: The Swoop WordPress plugin is a simple and secure password-free authentication service with 2FA. To get started, go to your <a href='./options-general.php?page=swoop'>Swoop Settings page</a> to connect the Swoop service to your property.
-Version: 1.4.0
+Version: 1.4.1
 Author: Swoop
 Author URI: https://swoopnow.com
 License: GPL3

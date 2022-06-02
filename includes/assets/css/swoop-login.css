@@ -2,6 +2,7 @@
   border: 0;
   box-shadow: none;
   background: none;
+  text-align: center;
 }
 
 .forgetmenot {
@@ -16,9 +17,6 @@
   display: none;
 }
 
-#backtoblog {
-  /* display: none; */
-}
 
 #loginform>p:first-child {
   display: none;
@@ -28,33 +26,42 @@
   display: none;
 }
 
-.swoop-login-with-password {
-  margin-top: 40px;
-  text-align: center;
+
+.login #backtoblog, .login #nav {
+    text-align: center !important;
+  }
+
+.footer-desktop {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    background-color: #fff;
+    border-top: 1px solid #D1D1D1;
+    text-align: right;
+    font-size: 12px;
 }
 
-.swoop-login-with-password a {
-  text-decoration: none;
-  color: #333;
+.footer-branding {
+  padding: 8px;
 }
 
-.swoop-login-blog-name {
-  margin-top: 10px;
-  text-align: center;
+a.swoop-link-swoop, a.swoop-link-swoop:visited, a.swoop-link-swoop:hover, a.swoop-link-swoop:focus {
+    color: #3c4043;
+    text-decoration: none;
+
 }
 
-.swoop-login-blog-name a {
-  text-decoration: none;
-  color: #333;
+img.branding-shield {
+    width: 12px;
+    margin: 0 5px 1px 0;
+    vertical-align: middle;
 }
 
-.swoop-loading {
-  text-align: center;
-  font-size: 22px;
-  /* color: rgb(0,171,117); */
+.tagline {
+    margin: 15px 0 0 0;
 }
 
-.swoop-loading img {
-  width: 100px;
-  height: auto;
+.click-button img {
+  display: block;
+  max-width: 100%;
 }
