@@ -6,7 +6,7 @@
     }
 
     const swoopOnSuccess = (user) => {
-      let url = "<?php echo wp_login_url(); ?>";      
+      let url = "<?php echo site_url() . "/wp-json/" . SWOOP_PLUGIN_NAMESPACE . "/" . SWOOP_PLUGIN_CALLBACK ?>";   
 
       // Get the user's id_token
       let id_token = user.id_token;
@@ -14,7 +14,7 @@
       // Set up the request
       let xhr = new XMLHttpRequest();
       xhr.open('POST', `${url}?token=${user.id_token}`);
-      xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+      xhr.setRequestHeader('Content-Type', 'application/json');
       // Success callback for the request. Redirect the user to their account
       xhr.onload = function() {
         console.log("Server response:");

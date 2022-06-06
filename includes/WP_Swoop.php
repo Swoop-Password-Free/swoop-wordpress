@@ -10,7 +10,7 @@ class WP_Swoop {
 
     public function __construct($file) {
 
-        $this->options = get_option( SWOOP_OPTIONS_KEY );
+        $this->options = get_option( SWOOP_OPTIONS_KEY );        
 
         register_uninstall_hook($file, array('WP_Swoop', 'uninstall'));
 
@@ -21,6 +21,15 @@ class WP_Swoop {
               isset($this->options[SWOOP_CLIENT_SECRET_KEY]) ? $this->options[SWOOP_CLIENT_SECRET_KEY] : "",
               site_url(  plugin_dir_url( __DIR__ ) )
           );
+
+          add_action( 'rest_api_init', function () {
+            register_rest_route(SWOOP_PLUGIN_NAMESPACE , SWOOP_PLUGIN_CALLBACK , array(
+              'methods' => 'GET',
+              'callback' => array('WP_Swoop','swoop_callback'),
+              'args' => array('code'),
+              'permission_callback' => '__return_true'
+            ) );
+          } );
 
           if(!isset($_GET["use-password"])) {
               add_action( 'login_form', array($this, 'add_swoop_login_button') );
