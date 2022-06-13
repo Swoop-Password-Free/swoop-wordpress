@@ -38,7 +38,7 @@ class WP_Swoop {
               add_action('wp_logout',array($this,'swoop_logout'));
               // Add hook for admin <head></head>
               add_action( 'login_head', array($this, 'add_swoop_init_to_login_head') );
-              add_action( 'login_footer', array($this, 'add_swoop_to_footer') , 1000000000);
+              add_action( 'login_footer', array($this, 'add_swoop_to_login_footer') , 1000000000);
               add_action( 'wp_head', array($this, 'add_swoop_init_to_wp_head') );
               add_action( 'wp_footer', array($this, 'add_swoop_to_footer') , 1000000000);
 
@@ -90,7 +90,7 @@ class WP_Swoop {
 
     // Remove Login Form
     public function add_swoop_js() {
-        add_action('login_enqueue_scripts', array($this,'enqueue_swoop_js'),10);
+        add_action('login_enqueue_scripts', array($this,'enqueue_login_swoop_js'),10);
         add_action('wp_enqueue_scripts', array($this,'enqueue_swoop_js'),10);
 
         add_filter( 'script_loader_tag', function ( $tag, $handle ) {
@@ -104,15 +104,23 @@ class WP_Swoop {
         }, 10, 2 );
     }
 
-    public function enqueue_swoop_js($hook) {
-        wp_enqueue_style( 'swoop-login', plugin_dir_url(__FILE__) . 'assets/css/swoop-login.css' );
+    public function enqueue_swoop_js($hook) {        
         wp_enqueue_script( 'swoop-login-js', 'https://cdn.jsdelivr.net/npm/@swoop-password-free/swoop@1.3.8/dist/swoop.js' );
     }
 
+    public function enqueue_login_swoop_js($hook) {
+      wp_enqueue_style( 'swoop-login', plugin_dir_url(__FILE__) . 'assets/css/swoop-login.css' );
+      wp_enqueue_script( 'swoop-login-js', 'https://cdn.jsdelivr.net/npm/@swoop-password-free/swoop@1.3.8/dist/swoop.js' );
+  }
+
     public function add_swoop_to_footer() {
-        include 'views/swoop_js.php';
-        include 'views/swoop_wp_login_footer.php';
+        include 'views/swoop_js.php';        
     }
+
+    public function add_swoop_to_login_footer() {
+      include 'views/swoop_js.php';
+      include 'views/swoop_wp_login_footer.php';
+  }
 
     static function swoop_callback( $data ) {
 
