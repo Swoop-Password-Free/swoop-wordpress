@@ -85,6 +85,8 @@ class WP_Swoop {
     }
 
     function add_swoop_button($title) {
+      $textColor = isset($this->options[SWOOP_LOGIN_BUTTON_TEXT_COLOR_KEY]) ? $this->options[SWOOP_LOGIN_BUTTON_TEXT_COLOR_KEY] : null;
+      $backgroundColor = isset($this->options[SWOOP_LOGIN_BUTTON_BACKGROUND_COLOR_KEY]) ? $this->options[SWOOP_LOGIN_BUTTON_BACKGROUND_COLOR_KEY] : null;
       include 'views/swoop_wp_login.php';
     }
 
@@ -105,12 +107,12 @@ class WP_Swoop {
     }
 
     public function enqueue_swoop_js($hook) {        
-        wp_enqueue_script( 'swoop-login-js', 'https://cdn.jsdelivr.net/npm/@swoop-password-free/swoop@1.3.8/dist/swoop.js' );
+        wp_enqueue_script( 'swoop-login-js', 'https://cdn.jsdelivr.net/npm/@swoop-password-free/swoop@1.4.9/dist/swoop.js' );
     }
 
     public function enqueue_login_swoop_js($hook) {
       wp_enqueue_style( 'swoop-login', plugin_dir_url(__FILE__) . 'assets/css/swoop-login.css' );
-      wp_enqueue_script( 'swoop-login-js', 'https://cdn.jsdelivr.net/npm/@swoop-password-free/swoop@1.3.8/dist/swoop.js' );
+      wp_enqueue_script( 'swoop-login-js', 'https://cdn.jsdelivr.net/npm/@swoop-password-free/swoop@1.4.9/dist/swoop.js' );
   }
 
     public function add_swoop_to_footer() {

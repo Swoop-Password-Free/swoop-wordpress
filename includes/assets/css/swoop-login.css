@@ -17,7 +17,6 @@
   display: none;
 }
 
-
 #loginform>p:first-child {
   display: none;
 }
@@ -26,42 +25,48 @@
   display: none;
 }
 
-
-.login #backtoblog, .login #nav {
-    text-align: center !important;
-  }
+.login #backtoblog,
+.login #nav {
+  text-align: center !important;
+}
 
 .footer-desktop {
-    position: absolute;
-    bottom: 0;
-    width: 100%;
-    background-color: #fff;
-    border-top: 1px solid #D1D1D1;
-    text-align: right;
-    font-size: 12px;
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  background-color: #fff;
+  border-top: 1px solid #D1D1D1;
+  text-align: right;
+  font-size: 12px;
 }
 
 .footer-branding {
   padding: 8px;
 }
 
-a.swoop-link-swoop, a.swoop-link-swoop:visited, a.swoop-link-swoop:hover, a.swoop-link-swoop:focus {
-    color: #3c4043;
-    text-decoration: none;
-
+a.swoop-link-swoop,
+a.swoop-link-swoop:visited,
+a.swoop-link-swoop:hover,
+a.swoop-link-swoop:focus {
+  color: #3c4043;
+  text-decoration: none;
 }
 
 img.branding-shield {
-    width: 12px;
-    margin: 0 5px 1px 0;
-    vertical-align: middle;
+  width: 12px;
+  margin: 0 5px 1px 0;
+  vertical-align: middle;
 }
 
 .tagline {
-    margin: 15px 0 0 0;
+  margin: 15px 0 0 0;
 }
 
 .click-button img {
   display: block;
   max-width: 100%;
+}
+
+.click-button {
+  text-align: center;
 }

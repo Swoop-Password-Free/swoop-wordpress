@@ -2,9 +2,11 @@
 data-redirect_to="<?php echo isset($_GET['redirect_to']) ? $_GET['redirect_to'] : get_admin_url(); ?>">
 </div> -->
 
-<div class="click-button">
-    <a href="#" onclick="swoop.in({'redirect_to': '<?php echo isset($_GET['redirect_to']) ? $_GET['redirect_to'] : get_admin_url(); ?>'})">
-        <img src="<?php echo plugin_dir_url( __DIR__ ) . 'assets/images/swoop-button-with-icon@2x.png'; ?>" alt="Sign In with 1-Click" />
-    </a>
+<div class="click-button">        
+    <div class="swoop-button"              
+              <?php echo $backgroundColor ? "data-background-color=\"$backgroundColor\"" : ""; ?>
+              <?php echo $textColor ? "data-text-color=\"$textColor\"" : ""; ?>
+              data-redirect_to="<?php echo isset($_GET['redirect_to']) ? $_GET['redirect_to'] : get_admin_url(); ?>">
+            ></div>
 </div>
 <div class="tagline">Sign In with 1-Click is more secure</div>

@@ -44,6 +44,9 @@
       $options = get_option( SWOOP_OPTIONS_KEY, array() );
       $client_id = array_key_exists(SWOOP_CLIENT_ID_KEY, $options) ? $options[SWOOP_CLIENT_ID_KEY] : "";
       $client_secret = array_key_exists(SWOOP_CLIENT_SECRET_KEY, $options) ? $options[SWOOP_CLIENT_SECRET_KEY] : "";
+      $login_button_text_color = array_key_exists(SWOOP_LOGIN_BUTTON_TEXT_COLOR_KEY, $options) ? $options[SWOOP_LOGIN_BUTTON_TEXT_COLOR_KEY] : "#ffffff";
+      $login_button_background_color = array_key_exists(SWOOP_LOGIN_BUTTON_BACKGROUND_COLOR_KEY, $options) ? $options[SWOOP_LOGIN_BUTTON_BACKGROUND_COLOR_KEY] : "#000000";
+
       include ( plugin_dir_path( __FILE__ ) . '../views/password-free.php' );
     }
 
@@ -66,6 +69,18 @@
         if ( null !== wp_unslash( $_POST[SWOOP_CLIENT_SECRET_KEY] ) ) {
             $value = sanitize_text_field( $_POST[SWOOP_CLIENT_SECRET_KEY] );
             $this->options[SWOOP_CLIENT_SECRET_KEY] = $value;
+            update_option( SWOOP_OPTIONS_KEY, $this->options );
+        }
+
+        if ( null !== wp_unslash( $_POST[SWOOP_LOGIN_BUTTON_TEXT_COLOR_KEY] ) ) {
+            $value = sanitize_text_field( $_POST[SWOOP_LOGIN_BUTTON_TEXT_COLOR_KEY] );
+            $this->options[SWOOP_LOGIN_BUTTON_TEXT_COLOR_KEY] = $value;
+            update_option( SWOOP_OPTIONS_KEY, $this->options );
+        }
+
+        if ( null !== wp_unslash( $_POST[SWOOP_LOGIN_BUTTON_BACKGROUND_COLOR_KEY] ) ) {
+            $value = sanitize_text_field( $_POST[SWOOP_LOGIN_BUTTON_BACKGROUND_COLOR_KEY] );
+            $this->options[SWOOP_LOGIN_BUTTON_BACKGROUND_COLOR_KEY] = $value;
             update_option( SWOOP_OPTIONS_KEY, $this->options );
         }
 

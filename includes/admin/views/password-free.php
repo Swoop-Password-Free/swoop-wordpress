@@ -35,6 +35,31 @@
             </tr>
         </tbody>
     </table>
+    <h2>Display Options</h2>
+    <table>
+        <tbody>
+            <tr>
+                <!-- Color Picker For Login Button Text Color -->
+                <th scope="row">Login Button Text Color</th>
+                <td>
+                    <fieldset>
+                        <input name="swoop_login_button_text_color" type="color" id="swoop_login_button_text_color" value="<?php echo $login_button_text_color; ?>" class="short-text" />
+                        <p class="description">The color of the text on the login button.</p>
+                    </fieldset>
+                </td>                
+            </tr>
+            <tr>
+                <!-- Color Picker For Login Button Background Color -->
+                <th scope="row">Login Button Background Color</th>
+                <td>
+                    <fieldset>
+                        <input name="swoop_login_button_background_color" type="color" id="swoop_login_button_background_color" value="<?php echo $login_button_background_color; ?>" class="short-text" />
+                        <p class="description">The background color of the login button.</p>
+                    </fieldset>
+                </td>
+            </tr>
+        </tbody>
+    </table>
     <p class="submit">
       <?php wp_nonce_field( SWOOP_PROTECT_NONCE_KEY . '-save', SWOOP_PROTECT_NONCE_KEY ); ?>
       <input type="submit" name="submit" id="submit" class="button button-primary"
