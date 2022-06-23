@@ -18,6 +18,7 @@ define("SWOOP_CLIENT_ID_KEY", "swoop_client_id");
 define("SWOOP_CLIENT_SECRET_KEY", "swoop_client_secret");
 define("SWOOP_LOGIN_BUTTON_TEXT_COLOR_KEY", "swoop_login_button_text_color");
 define("SWOOP_LOGIN_BUTTON_BACKGROUND_COLOR_KEY", "swoop_login_button_background_color");
+define("SWOOP_HIDE_LOGIN_WITH_PASSWORD_KEY", "swoop_hide_login_with_password");
 
 define("SWOOP_ORGANIZATION_NAME_KEY", "swoop_organization_name");
 define("SWOOP_ORGANIZATION_ID_KEY", "swoop_organization_id");

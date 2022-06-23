@@ -33,10 +33,20 @@
                     </fieldset>
                 </td>
             </tr>
+            <tr>
+                <th scope="row">Hide <b>Login with password</b></th>
+                <td>
+                    <fieldset>                        
+                        <input type="checkbox" name="swoop_hide_login_with_password" value="true" <?php echo $hide_login_with_password ? "checked" : ""; ?> />                                                    
+                        <p class="description">Hides the <b>Login with password</b> button on the login page. It can still be accessed by adding <code>&use-password=true</code> to the URL.
+                        </p>
+                    </fieldset>
+                </td>
+            </tr>
         </tbody>
     </table>
     <h2>Display Options</h2>
-    <table>
+    <table class="form-table" role="presentation">
         <tbody>
             <tr>
                 <!-- Color Picker For Login Button Text Color -->

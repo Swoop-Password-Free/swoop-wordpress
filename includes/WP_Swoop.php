@@ -87,6 +87,7 @@ class WP_Swoop {
     function add_swoop_button($title) {
       $textColor = isset($this->options[SWOOP_LOGIN_BUTTON_TEXT_COLOR_KEY]) ? $this->options[SWOOP_LOGIN_BUTTON_TEXT_COLOR_KEY] : null;
       $backgroundColor = isset($this->options[SWOOP_LOGIN_BUTTON_BACKGROUND_COLOR_KEY]) ? $this->options[SWOOP_LOGIN_BUTTON_BACKGROUND_COLOR_KEY] : null;
+      $hide_login_with_password = isset($this->options[SWOOP_HIDE_LOGIN_WITH_PASSWORD_KEY]) ? $this->options[SWOOP_HIDE_LOGIN_WITH_PASSWORD_KEY] : null;
       include 'views/swoop_wp_login.php';
     }
 
