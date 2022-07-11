@@ -35,7 +35,7 @@ class WP_Swoop_Admin
             'manage_options',
             SWOOP_PLUGIN_SLUG,
             array( $this->passwordFreePage, 'create' ),
-            plugin_dir_url( __DIR__ ) . '/includes/assets/images/swoop-secure-shield-20px.svg'
+            plugin_dir_url( __DIR__ ) . '/includes/assets/images/1-click-login-envelope-white-alone.svg'
         );
 
         add_submenu_page(

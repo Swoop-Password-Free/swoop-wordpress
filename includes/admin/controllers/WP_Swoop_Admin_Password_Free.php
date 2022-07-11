@@ -143,8 +143,8 @@
         <ul id="swoop-footer">
             <li><a href="https://docs.swoopnow.com/docs/wordpress" target="_blank">Documentation</li>
             <li><a href="https://swoopnow.com/support" target="_blank">Support</li>
-            <li><a href="https://dashboard.swoop.email/" target="_blank">Swoop Dashboard</a></li>
-            <li><a href="https://swoopnow.com/" target="_blank">Learn more about Swoop</a></li>
+            <li><a href="https://dashboard.swoop.email/" target="_blank">1-Click Login Dashboard</a></li>
+            <li><a href="https://swoopnow.com/" target="_blank">Learn more about 1-Click Login</a></li>
         </ul>';
     }
   }

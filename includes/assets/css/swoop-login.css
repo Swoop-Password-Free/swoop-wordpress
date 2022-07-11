@@ -3,7 +3,9 @@
   box-shadow: none;
   background: none;
   text-align: center;
+  padding-bottom: 0 !important;
 }
+
 
 .forgetmenot {
   display: none;
@@ -48,11 +50,11 @@ a.swoop-link-swoop,
 a.swoop-link-swoop:visited,
 a.swoop-link-swoop:hover,
 a.swoop-link-swoop:focus {
-  color: #3c4043;
+  color: gray;
   text-decoration: none;
 }
 
-img.branding-shield {
+img.one-click-icon {
   width: 12px;
   margin: 0 5px 1px 0;
   vertical-align: middle;
@@ -60,6 +62,10 @@ img.branding-shield {
 
 .tagline {
   margin: 15px 0 0 0;
+}
+
+.passwords-suck {
+  margin: 80px 0 0 0;
 }
 
 .click-button img {

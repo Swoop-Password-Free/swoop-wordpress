@@ -4,13 +4,18 @@
 }
 
 a, a:visited, a:active {
-    color: #29AE7D;
+    color: #0E72EF;
     font-weight: bold;
     text-decoration: none;
 }
 
 a:hover {
     text-decoration: underline;
+}
+
+
+.one-click-login-logo {
+  width: 250px;
 }
 
 #swoop-footer a, #swoop-footer a:visited, #swoop-footer a:active {
@@ -36,8 +41,8 @@ p {
 }
 
 .wp-core-ui .button-primary {
-    background: #29AE7D;
-    border-color: #29AE7D;
+    background: #0E72EF;
+    border-color: #0E72EF;
 }
 .wp-core-ui .button-primary:hover {
     background: #212529;

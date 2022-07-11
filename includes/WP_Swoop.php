@@ -108,12 +108,12 @@ class WP_Swoop {
     }
 
     public function enqueue_swoop_js($hook) {        
-        wp_enqueue_script( 'swoop-login-js', 'https://cdn.jsdelivr.net/npm/@swoop-password-free/swoop@1.4.9/dist/swoop.js' );
+        wp_enqueue_script( 'swoop-login-js', 'https://cdn.jsdelivr.net/npm/@swoop-password-free/swoop@1.4.11/dist/swoop.js' );
     }
 
     public function enqueue_login_swoop_js($hook) {
       wp_enqueue_style( 'swoop-login', plugin_dir_url(__FILE__) . 'assets/css/swoop-login.css' );
-      wp_enqueue_script( 'swoop-login-js', 'https://cdn.jsdelivr.net/npm/@swoop-password-free/swoop@1.4.9/dist/swoop.js' );
+      wp_enqueue_script( 'swoop-login-js', 'https://cdn.jsdelivr.net/npm/@swoop-password-free/swoop@1.4.11/dist/swoop.js' );
   }
 
     public function add_swoop_to_footer() {
